@@ -1,0 +1,14 @@
+{
+  "name": "baseapi",
+  "version": "1.0.0",
+  "description": "Projeto API base",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jurandir B Ferreira Jr",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.5.1"
+  }
+}
