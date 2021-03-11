@@ -1,8 +1,11 @@
 // https://www.luiztools.com.br/post/como-usar-nodejs-postgresql/?gclid=Cj0KCQiAs5eCBhCBARIsAEhk4r7shSKLfW69NczJ-AL7jZ5FJZtBINLH8OBO2uXOUPNCALvV8U9tJ50aAmPvEALw_wcB
 
-async function connect() {
-    if (global.connection)
-        return global.connection.connect();
+
+async function db() {
+    if (global.connection) {
+        console.log('Connection OK.')
+        return global.connection
+    }
 
     const { Pool } = require('pg');
     const pool = new Pool({
@@ -11,16 +14,17 @@ async function connect() {
     });
 
     //apenas testando a conexão
-    const client = await pool.connect();
+    global.connection = await pool.connect();
     console.log("Criou pool de conexões no PostgreSQL!");
 
-    const res = await client.query('SELECT NOW()');
+    const res = await global.connection.query('SELECT NOW()');
     console.log(res.rows[0]);
-    client.release();
 
     //guardando para usar sempre o mesmo
-    global.connection = pool;
-    return pool.connect();
+    
+    return global.connection;
 }
 
-module.exports = connect
+
+
+module.exports = db
