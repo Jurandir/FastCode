@@ -1,8 +1,9 @@
 const db       = require('./db')
 
-async function sqlPaginate(sql,sqlCount,pg) {
+async function sqlPaginate(sql,sqlCount,pg,debug) {
     const qry = await db()
     let res = {
+        command:'PAGINATION',
         rows: [],
         Pages: 0,
         Page: pg._Page,
@@ -12,7 +13,7 @@ async function sqlPaginate(sql,sqlCount,pg) {
     }
     let new_sql = sql + pg._sql
 
-    console.log('sqlPaginate:',pg,new_sql)
+    if(debug) { console.log('sqlPaginate:',pg,new_sql) }
 
     const count = await qry.query(sqlCount,[])
     res.Total  = parseInt(count.rows[0].qtde || 0)

@@ -43,8 +43,14 @@ console.log('1',d)
 //console.log('Disrupt',m)
 
 
-bancos.Page('',12,15).then(z=>{
-    console.log('Page',z)
+//bancos.Page('',12,15).then(z=>{
+//    console.log('Page',z)
+//    process.exit(0)
+//
+//})
+
+bancos2.Update(800,{no_bancos:"teste de update OK."}).then(ret=>{
+    console.log('Update',ret)
     process.exit(0)
 
 })

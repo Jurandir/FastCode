@@ -1,0 +1,2 @@
+-- Tipos no PG
+SELECT oid, typname FROM pg_type
