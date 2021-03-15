@@ -7,7 +7,7 @@ const AUTO_ID    = false
 const DEBUG      = true
 
 
-const Bancos2 = methods({
+const Bancos = methods({
     table_name: TABLE_NAME,
     key: TABLE_ID,
     sequence: TABLE_SEQ,
@@ -21,4 +21,4 @@ const Bancos2 = methods({
     ]
 })
 
-module.exports = Bancos2
+module.exports = Bancos
