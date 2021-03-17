@@ -9,6 +9,7 @@
   "author": "Jurandir B Ferreira Jr",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.29.1",
     "pg": "^8.5.1"
   }
 }

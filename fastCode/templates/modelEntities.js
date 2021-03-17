@@ -1,12 +1,17 @@
+const moment = require('moment')
 const dataStructure = require('../dataSearches/dataStructurePG')
 
-const modelEntities = async () => { 
+moment.locale('pt-br')
 
-    const UNIT       = 'bancos'
-    const TABLE      = 'bancos'
-    const SCHEMA     = 'public'
+const modelEntities = async (table,schema,unit) => { 
+
+    const TABLE      = table  
+    const SCHEMA     = schema || 'public'
+    const UNIT       = unit   || table
 
     let txt
+
+    let now = moment().format('DD/MM/YYYY HH:mm:ss')
 
     await dataStructure(TABLE,SCHEMA).then(({dbColumns,keys,inc })=> {
 
@@ -17,6 +22,7 @@ const modelEntities = async () => {
         const FIELDS     = makeColumns(dbColumns)
         
     txt = `
+    // Fast Code v1.0 - ${now}
     const methods  = require('../../database/PG/methods')
     
     const TABLE_NAME = '${SCHEMA}.${TABLE}'
@@ -25,7 +31,7 @@ const modelEntities = async () => {
     const AUTO_ID    = ${AUTO_ID}
     const DEBUG      = ${DEBUG}
     
-    const Bancos = methods({
+    const ${UNIT} = methods({
         table_name: TABLE_NAME,
         key: TABLE_ID,
         sequence: TABLE_SEQ,
@@ -55,8 +61,7 @@ function makeAttributes ({name, type, len, isnul, def, caption, describe, fk}) {
     return `\t {name: '${name}', type: '${type}', len: ${len}, isnul: ${isnul}, def: ${def}, caption:'${caption}', describe:'${describe}', fk:${fk}}, \n`
 }
 
-console.log('TXT:',txt)
-process.exit(0)
+return txt
 
 }
 
