@@ -1,0 +1,66 @@
+{
+	"dateUpdate": "2021-03-20T15:45:45-03:00",
+	"lastID": 5,
+	"list": [
+		{
+			"id": 1,
+			"name": "RegisterTweets",
+			"description": "Cadstro de tweets",
+			"tableName": "tweets",
+			"unit": "Tweets",
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_seek": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 2,
+			"name": "RegisterBancos2",
+			"description": "Cadstro de bancos2",
+			"tableName": "bancos2",
+			"unit": "Bancos2",
+			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 3,
+			"name": "RegisterBancos",
+			"description": "Cadstro de bancos",
+			"tableName": "bancos",
+			"unit": "Bancos",
+			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 4,
+			"name": "RegisterUsers",
+			"description": "Cadstro de users",
+			"tableName": "users",
+			"unit": "Users",
+			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 5,
+			"name": "RegisterTokens",
+			"description": "Cadstro de tokens",
+			"tableName": "tokens",
+			"unit": "Tokens",
+			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		}
+	]
+}

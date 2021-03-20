@@ -1,6 +1,6 @@
 
-    // Fast Code v1.0 - 19/03/2021 23:09:55
-    const methods  = require('../../database/PG/methods')
+    // Fast Code v1.0 - Entities -  20/03/2021 19:34:54
+    const methods  = require('../database/PG/methods')
     
     const TABLE_NAME = 'public.tweets'
     const TABLE_ID   = 'id'

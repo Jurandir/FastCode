@@ -1,13 +1,18 @@
-const modelEntities = require('../templates/modelEntities')
-const routerAPI     = require('../templates/routerAPI')
-const createNewFile = require('../helpers/createNewFile')
+const modelEntities  = require('../templates/modelEntities')
+const routerAPI      = require('../templates/routerAPI')
+const configEntities = require('../templates/configEntities')
+const listAPI        = require('../templates/listAPI')
+const entityApiGET   = require('../templates/entityApiGET')
+const createNewFile  = require('../helpers/createNewFile')
 
 // node .\fastCode\codeGenerators\entityModel.js --table tweets --schema public --unit Tweets --save --no-show
 
-const model_DIR   = './src/models' 
-const router_DIR  = './src/routes' 
-const test_DIR    = './test' 
-const backup_DIR  = './backup' 
+const model_DIR       = './src/models' 
+const router_DIR      = './src/routes' 
+const controllersDIR  = './src/controllers'
+const test_DIR        = './test' 
+const backup_DIR      = './backup' 
+
 
 let ROTINE     = process.argv[1]
 let NODE       = process.argv[0]
@@ -28,8 +33,10 @@ const entityModel = (params) => {
     SCHEMA = SCHEMA ? SCHEMA : 'public'
     UNIT   = UNIT   ? UNIT : TABLE.charAt(0).toUpperCase() + TABLE.slice(1)
     
-    console.log('NODE:',NODE)
-    console.log('ROTINE:',ROTINE)
+    if(SHOW) { console.log('NODE:',NODE) }
+    if(SHOW) { console.log('ROTINE:',ROTINE) }
+
+    configEntities(TABLE,UNIT)
    
     modelEntities(TABLE,SCHEMA,UNIT).then(txt=>{
         
@@ -45,6 +52,23 @@ const entityModel = (params) => {
         
     })
 
+    listAPI().then((txt)=>{
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(router_DIR,'api',txt) }
+
+    })
+
+    entityApiGET(UNIT).then((txt)=>{
+
+        let unit = `${UNIT}`.toLowerCase()+'GET'
+        let dir  = `${controllersDIR}/${UNIT}`
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(dir,unit,txt) }
+
+    })
+
 }
 
 process.argv.forEach(function (val, index, array) {
@@ -57,7 +81,5 @@ process.argv.forEach(function (val, index, array) {
 })
 
 let values = { ROTINE, NODE, TABLE, SCHEMA, UNIT, SAVE, SHOW }
-
-// console.log(ROOT_APP_PATH);
 
 entityModel(values)

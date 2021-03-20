@@ -1,5 +1,6 @@
 // https://www.luiztools.com.br/post/como-usar-nodejs-postgresql/?gclid=Cj0KCQiAs5eCBhCBARIsAEhk4r7shSKLfW69NczJ-AL7jZ5FJZtBINLH8OBO2uXOUPNCALvV8U9tJ50aAmPvEALw_wcB
 
+const moment = require('moment')
 
 async function db() {
     if (global.connection) {
@@ -18,7 +19,8 @@ async function db() {
     console.log("Criou pool de conexões no PostgreSQL!");
 
     const res = await global.connection.query('SELECT NOW()');
-    console.log(res.rows[0]);
+    let now = moment(res.rows[0].now).format()
+    console.log('Time Connection:',now);
 
     //guardando para usar sempre o mesmo
     
