@@ -15,7 +15,6 @@ let SAVE       = false
 let SHOW       = true
 
 const entityModel = (params) => {
-    console.log(params)
     let { ROTINE, NODE, TABLE, SCHEMA, UNIT, SAVE, SHOW } = params
 
     if(!TABLE) {
