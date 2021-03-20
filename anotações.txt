@@ -5,3 +5,9 @@ SELECT oid, typname FROM pg_type
 -- Datas e Times
 https://momentjs.com/
 
+
+-- gerar ENTIDADE
+node .\fastCode\codeGenerators\entityModel.js --table tweets --schema public --unit Tweets --save --no-show
+ou 
+gen.bat --table tweets --schema public --unit Tweets --save --no-show
+

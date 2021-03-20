@@ -38,7 +38,7 @@ const dataStructurePG = async (table,schema) => {
         attr.type     = item.udt_name
         attr.len      = item.udt_name == 'varchar' ? item.character_maximum_length : 0
         attr.isnul    = (item.is_nullable == 'YES')
-        attr.def      = item.column_default ? item.column_default : item.udt_name=='varchar' ? `''` : item.udt_name=='int4' ? 0 : null
+        attr.def      = item.column_default ? `"${item.column_default}"` : item.udt_name=='varchar' ? `''` : item.udt_name=='int4' ? 0 : null
         attr.inc      = item.column_default && attr.key > 0 ? true : false 
         attr.describe = 'Tabela : '+item.column_name
         return attr

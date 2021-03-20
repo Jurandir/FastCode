@@ -22,7 +22,7 @@ const modelEntities = async (table,schema,unit) => {
         const FIELDS     = makeColumns(dbColumns)
         
     txt = `
-    // Fast Code v1.0 - ${now}
+    // Fast Code v1.0 - Entities -  ${now}
     const methods  = require('../../database/PG/methods')
     
     const TABLE_NAME = '${SCHEMA}.${TABLE}'
@@ -52,13 +52,13 @@ const modelEntities = async (table,schema,unit) => {
 function makeColumns (dbColumns) {
     let fields = ''
     for ( let attributes of dbColumns ) {
-        fields = fields + makeAttributes(attributes)
+        fields = fields + '\n       '+makeAttributes(attributes)
     }
     return fields
 }
 
 function makeAttributes ({name, type, len, isnul, def, caption, describe, fk}) {
-    return `\t {name: '${name}', type: '${type}', len: ${len}, isnul: ${isnul}, def: ${def}, caption:'${caption}', describe:'${describe}', fk:${fk}}, \n`
+    return `{name: '${name}', type: '${type}', len: ${len}, isnul: ${isnul}, def: ${def}, caption:'${caption}', describe:'${describe}', fk:${fk}},`
 }
 
 return txt
