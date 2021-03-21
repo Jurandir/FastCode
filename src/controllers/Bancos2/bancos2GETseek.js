@@ -1,24 +1,23 @@
-// Fast Code v1.0 - Entity API GET - 21/03/2021 10:49:02
-const Tokens = require('../../models/Tokens')
+// Fast Code v1.0 - Entity API GET Seek - 21/03/2021 12:52:56
+const Bancos2 = require('../../models/Bancos2')
 const MSG = require('../../helpers/message')
 
-async function tokensGET ( req, res ) {
-    let { filter }  = req.query
-    let condition   = filter ? filter : '1=1' 
+async function bancos2GETseek ( req, res ) {
+    let { tagId }   = req.params
     let idMsg       = 0
         
     let retorno = {
         success: true,
         message: '',
         data: [],
-        params: condition,
+        params: tagId,
         code: 0,
         err: ''
     }
     
-    Tokens.Debug(false)
+    Bancos2.Debug(false)
 
-    Tokens.Select(condition).then(ret=>{
+    Bancos2.Seek(tagId).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -40,4 +39,4 @@ async function tokensGET ( req, res ) {
     })
 }
 
-module.exports = tokensGET
+module.exports = bancos2GETseek

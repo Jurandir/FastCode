@@ -1,18 +1,18 @@
 
-    // Fast Code v1.0 - Routes - 20/03/2021 15:43:44
+    // Fast Code v1.0 - Routes - 21/03/2021 10:48:27
     const express      = require('express')
     const router       = express.Router()
     const validaToken  = require('../auth/verifyToken')
 
-    const UsersGET            = require('../controllers/Users/UsersGET')
-    const UsersPOST           = require('../controllers/Users/UsersPOST')
-    const UsersPUT            = require('../controllers/Users/UsersPUT')
-    const UsersDELETE         = require('../controllers/Users/UsersDELETE')
+    const usersGET            = require('../controllers/users/usersGET')
+    //const usersPOST           = require('../controllers/users/usersPOST')
+    //const usersPUT            = require('../controllers/users/usersPUT')
+    //const usersDELETE         = require('../controllers/users/usersDELETE')
     
-    router.get('/api/Users'    , validaToken, UsersGET )
-    router.post('/api/Users'   , validaToken, UsersPOST )
-    router.put('/api/Users'    , validaToken, UsersPUT )
-    router.delete('/api/Users' , validaToken, UsersDELETE )
+    router.get('/'    , validaToken, usersGET )
+    //router.post('/'   , validaToken, usersPOST )
+    //router.put('/'    , validaToken, usersPUT )
+    //router.delete('/' , validaToken, usersDELETE )
     
-    module.exports = routerUsers
+    module.exports = router
     

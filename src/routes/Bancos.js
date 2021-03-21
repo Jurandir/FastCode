@@ -1,18 +1,22 @@
 
-    // Fast Code v1.0 - Routes - 20/03/2021 15:30:04
-    const express               = require('express')
-    const router                = express.Router()
+    // Fast Code v1.0 - Routes - 21/03/2021 11:41:34
+    const express      = require('express')
+    const router       = express.Router()
+    const validaToken  = require('../auth/verifyToken')
+
+    const bancosGET            = require('../controllers/bancos/bancosGET')
+    const bancosGETpage        = require('../controllers/bancos/bancosGETpage')
+    const bancosGETseek        = require('../controllers/bancos/bancosGETseek')
+    //const bancosPOST           = require('../controllers/bancos/bancosPOST')
+    //const bancosPUT            = require('../controllers/bancos/bancosPUT')
+    //const bancosDELETE         = require('../controllers/bancos/bancosDELETE')
     
-    const validaToken           = require('../auth/verifyToken')
-    const BancosGET            = require('../controllers/Bancos/BancosGET')
-    const BancosPOST           = require('../controllers/Bancos/BancosPOST')
-    const BancosPUT            = require('../controllers/Bancos/BancosPUT')
-    const BancosDELETE         = require('../controllers/Bancos/BancosDELETE')
+    router.get('/'            , validaToken, bancosGET )
+    router.get('/page'        , validaToken, bancosGETpage )
+    router.get('/:tagId'      , validaToken, bancosGETseek )
+    //router.post('/'         , validaToken, bancosPOST )
+    //router.put('/:tagId'    , validaToken, bancosPUT )
+    //router.delete('/:tagId' , validaToken, bancosDELETE )
     
-    router.get('/api/Bancos'    , validaToken, BancosGET )
-    router.post('/api/Bancos'   , validaToken, BancosPOST )
-    router.put('/api/Bancos'    , validaToken, BancosPUT )
-    router.delete('/api/Bancos' , validaToken, BancosDELETE )
-    
-    module.exports = routerBancos
+    module.exports = router
     

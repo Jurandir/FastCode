@@ -1,4 +1,18 @@
-// Fast Code v1.0 - Server API - 21/03/2021 12:52:56
+const moment = require('moment')
+
+moment.locale('pt-br')
+
+const routerAPI = async () => { 
+  
+    const UNIT       = 'serverAPI'
+    const port       = 5000
+    const modo       = 'Test'
+
+    let txt
+    let now = moment().format('DD/MM/YYYY HH:mm:ss')
+
+    txt = 
+    `// Fast Code v1.0 - Server API - ${now}
     const express      = require('express')  
     const morgan       = require('morgan')
     
@@ -21,10 +35,16 @@
     
     app.use('/api', api )  
     
-    const port = process.env.PORT || '5000'
-    const modo = process.env.NODE_ENV || 'Test'
+    const port = process.env.PORT || '${port}'
+    const modo = process.env.NODE_ENV || '${modo}'
     
     app.listen(port, function () {
-        console.log('serverAPI - rodando na porta 5000 : Modo Test')
+        console.log('${UNIT} - rodando na porta ${port} : Modo ${modo}')
     })
+    `
     
+return txt
+
+}
+
+module.exports = routerAPI

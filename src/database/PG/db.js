@@ -15,18 +15,16 @@ async function db() {
     });
 
     //apenas testando a conexão
-    global.connection = await pool.connect();
-    console.log("Criou pool de conexões no PostgreSQL!");
+    global.connection   = await pool.connect();
+    global._dsp_message = "Criou pool de conexões no PostgreSQL!"
 
     const res = await global.connection.query('SELECT NOW()');
     let now = moment(res.rows[0].now).format()
-    console.log('Time Connection:',now);
+    global._dsp_date_connection = now 
 
     //guardando para usar sempre o mesmo
     
     return global.connection;
 }
-
-
 
 module.exports = db

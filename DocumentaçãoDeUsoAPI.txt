@@ -1,0 +1,17 @@
+Métodos:
+GET:
+
+{tabela}
+: lista todos os dados da tabela
+
+{tabela}/{id}
+: mostra dados referente ao ID 
+
+{tabela}?filter={condição}
+: Lista dados com base na CONDIÇÃO padrão "where SQL" - "filter" opcional
+
+{tabela}/page?page={pagina}&size={linhas}&filter={condição}
+: Lista dados com paginação PAGINA="pagina a ser mostrada",LINHAS="Quantidade de linhas",CONDIÇÃO="Filtro SQL"
+
+
+

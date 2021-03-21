@@ -1,24 +1,30 @@
-// Fast Code v1.0 - Entity API GET - 21/03/2021 10:49:02
-const Tokens = require('../../models/Tokens')
+const moment = require('moment')
+
+async function entityApiGETseek(UNIT) {
+    let now = moment().format('DD/MM/YYYY HH:mm:ss')
+    let unit = `${UNIT}`.toLowerCase()        
+
+txt = 
+`// Fast Code v1.0 - Entity API GET Seek - ${now}
+const ${UNIT} = require('../../models/${UNIT}')
 const MSG = require('../../helpers/message')
 
-async function tokensGET ( req, res ) {
-    let { filter }  = req.query
-    let condition   = filter ? filter : '1=1' 
+async function ${unit}GETseek ( req, res ) {
+    let { tagId }   = req.params
     let idMsg       = 0
         
     let retorno = {
         success: true,
         message: '',
         data: [],
-        params: condition,
+        params: tagId,
         code: 0,
         err: ''
     }
     
-    Tokens.Debug(false)
+    ${UNIT}.Debug(false)
 
-    Tokens.Select(condition).then(ret=>{
+    ${UNIT}.Seek(tagId).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -40,4 +46,11 @@ async function tokensGET ( req, res ) {
     })
 }
 
-module.exports = tokensGET
+module.exports = ${unit}GETseek
+`
+
+return txt
+
+}
+
+module.exports = entityApiGETseek

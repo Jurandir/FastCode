@@ -1,10 +1,12 @@
-// Fast Code v1.0 - Entity API GET - 21/03/2021 10:49:02
-const Tokens = require('../../models/Tokens')
+// Fast Code v1.0 - Entity API GET Page - 21/03/2021 11:41:34
+const Bancos = require('../../models/Bancos')
 const MSG = require('../../helpers/message')
 
-async function tokensGET ( req, res ) {
-    let { filter }  = req.query
-    let condition   = filter ? filter : '1=1' 
+async function bancosGETpage ( req, res ) {
+    let { filter,page,size }  = req.query
+    let condition   = filter ? filter : '' 
+    let pagina      = page ? page : 1 
+    let linhas      = size ? size : 50 
     let idMsg       = 0
         
     let retorno = {
@@ -12,13 +14,15 @@ async function tokensGET ( req, res ) {
         message: '',
         data: [],
         params: condition,
+        page: pagina,
+        size: linhas,
         code: 0,
         err: ''
     }
     
-    Tokens.Debug(false)
+    Bancos.Debug(false)
 
-    Tokens.Select(condition).then(ret=>{
+    Bancos.Page(condition,pagina,linhas).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -40,4 +44,4 @@ async function tokensGET ( req, res ) {
     })
 }
 
-module.exports = tokensGET
+module.exports = bancosGETpage

@@ -1,6 +1,6 @@
 {
-	"dateUpdate": "2021-03-20T15:45:45-03:00",
-	"lastID": 5,
+	"dateUpdate": "2021-03-21T10:40:51-03:00",
+	"lastID": 6,
 	"list": [
 		{
 			"id": 1,
@@ -56,6 +56,18 @@
 			"description": "Cadstro de tokens",
 			"tableName": "tokens",
 			"unit": "Tokens",
+			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 6,
+			"name": "RegisterAdonis_schema",
+			"description": "Cadstro de adonis_schema",
+			"tableName": "adonis_schema",
+			"unit": "Adonis_schema",
 			"allows_seek": true,
 			"allows_insert": true,
 			"allows_select": true,

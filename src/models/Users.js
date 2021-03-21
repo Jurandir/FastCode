@@ -1,6 +1,6 @@
 
-    // Fast Code v1.0 - Entities -  20/03/2021 15:43:44
-    const methods  = require('../../database/PG/methods')
+    // Fast Code v1.0 - Entities -  21/03/2021 10:48:27
+    const methods  = require('../database/PG/methods')
     
     const TABLE_NAME = 'public.users'
     const TABLE_ID   = 'id'

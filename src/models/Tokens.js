@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Entities -  20/03/2021 19:14:52
+    // Fast Code v1.0 - Entities -  21/03/2021 10:49:02
     const methods  = require('../database/PG/methods')
     
     const TABLE_NAME = 'public.tokens'

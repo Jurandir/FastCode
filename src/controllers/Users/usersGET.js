@@ -1,8 +1,8 @@
-// Fast Code v1.0 - Entity API GET - 21/03/2021 10:49:02
-const Tokens = require('../../models/Tokens')
+// Fast Code v1.0 - Entity API GET - 21/03/2021 10:48:27
+const Users = require('../../models/Users')
 const MSG = require('../../helpers/message')
 
-async function tokensGET ( req, res ) {
+async function usersGET ( req, res ) {
     let { filter }  = req.query
     let condition   = filter ? filter : '1=1' 
     let idMsg       = 0
@@ -16,9 +16,9 @@ async function tokensGET ( req, res ) {
         err: ''
     }
     
-    Tokens.Debug(false)
+    Users.Debug(false)
 
-    Tokens.Select(condition).then(ret=>{
+    Users.Select(condition).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -40,4 +40,4 @@ async function tokensGET ( req, res ) {
     })
 }
 
-module.exports = tokensGET
+module.exports = usersGET
