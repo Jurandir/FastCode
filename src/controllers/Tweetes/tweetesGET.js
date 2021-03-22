@@ -1,23 +1,24 @@
-// Fast Code v1.0 - Entity API GET Seek - 21/03/2021 23:34:11
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API GET - 21/03/2021 23:54:15
+const Tweetes = require('../../models/Tweetes')
 const MSG = require('../../helpers/message')
 
-async function bancos2GETseek ( req, res ) {
-    let { tagId }   = req.params
+async function tweetesGET ( req, res ) {
+    let { filter }  = req.query
+    let condition   = filter ? filter : '1=1' 
     let idMsg       = 0
         
     let retorno = {
         success: true,
         message: '',
         data: [],
-        params: tagId,
+        params: condition,
         code: 0,
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tweetes.Debug(false)
 
-    Bancos2.Seek(tagId).then(ret=>{
+    Tweetes.Select(condition).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -39,4 +40,4 @@ async function bancos2GETseek ( req, res ) {
     })
 }
 
-module.exports = bancos2GETseek
+module.exports = tweetesGET

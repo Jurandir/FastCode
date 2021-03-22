@@ -1,39 +1,40 @@
 const moment = require('moment')
 
-async function entityApiGET(UNIT) {
+async function entityApiPOST(UNIT) {
     let now = moment().format('DD/MM/YYYY HH:mm:ss')
     let unit = `${UNIT}`.toLowerCase()        
 
 txt = 
-`// Fast Code v1.0 - Entity API GET - ${now}
+`// Fast Code v1.0 - Entity API POST - ${now}
 const ${UNIT} = require('../../models/${UNIT}')
 const MSG = require('../../helpers/message')
 
-async function ${unit}GET ( req, res ) {
-    let { filter }  = req.query
-    let condition   = filter ? filter : '1=1' 
-    let idMsg       = 0
-        
+async function ${unit}POST ( req, res ) {
+    let body          = req.body
+    let idMsg         = 3
+
     let retorno = {
         success: true,
+        id: 0,
+        autoIncrement: ${UNIT}.Model.autoIncrement,
         message: '',
-        data: [],
-        params: condition,
         code: 0,
         err: ''
     }
     
     ${UNIT}.Debug(false)
 
-    ${UNIT}.Select(condition).then(ret=>{
-        idMsg           =  ret.rows.length>0 ? 1 : 0
+    ${UNIT}.Insert(body).then(ret=>{
+        idMsg           = ret.ID ? 3 : 8
         msg             = MSG(idMsg)
         retorno.code    = msg.code
         retorno.success = msg.success
-        retorno.data    = ret.rows
+        retorno.id      = ret.ID
         retorno.message = msg.message
 
-        res.json(retorno).status(retorno.code || 200)
+        // console.log('Response :',ret.command,ret.rowCount)
+
+        res.json(retorno).status(retorno.code || 201)
 
     }).catch((err)=>{
         idMsg           = 2
@@ -45,11 +46,12 @@ async function ${unit}GET ( req, res ) {
 
         res.json(retorno).status(retorno.code || 500) 
     })
+
 }
 
-module.exports = ${unit}GET
+module.exports = ${unit}POST
 `
 return txt
 }
 
-module.exports = entityApiGET
+module.exports = entityApiPOST

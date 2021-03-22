@@ -1,15 +1,19 @@
-const colors           = require('colors')
-const moment           = require('moment')
-const displayDados     = require('../helpers/displayDados')
-const modelEntities    = require('../templates/modelEntities')
-const routerAPI        = require('../templates/routerAPI')
-const configEntities   = require('../templates/configEntities')
-const listAPI          = require('../templates/listAPI')
-const entityApiGET     = require('../templates/entityApiGET')
-const entityApiGETseek = require('../templates/entityApiGETseek')
-const entityApiGETpage = require('../templates/entityApiGETpage')
-const serverAPI        = require('../templates/serverAPI')
-const createNewFile    = require('../helpers/createNewFile')
+const colors            = require('colors')
+const moment            = require('moment')
+const displayDados      = require('../helpers/displayDados')
+const modelEntities     = require('../templates/modelEntities')
+const routerAPI         = require('../templates/routerAPI')
+const configEntities    = require('../templates/configEntities')
+const listAPI           = require('../templates/listAPI')
+const entityApiGET      = require('../templates/entityApiGET')
+const entityApiGETseek  = require('../templates/entityApiGETseek')
+const entityApiGETpage  = require('../templates/entityApiGETpage')
+const entityApiGETtypes = require('../templates/entityApiGETtypes')
+const entityApiPOST     = require('../templates/entityApiPOST')
+const entityApiPUT      = require('../templates/entityApiPUT')
+const entityApiDELETE   = require('../templates/entityApiDELETE')
+const serverAPI         = require('../templates/serverAPI')
+const createNewFile     = require('../helpers/createNewFile')
 
 // node .\fastCode\codeGenerators\entityModel.js --table tweets --schema public --unit Tweets --save --no-show
 
@@ -102,10 +106,50 @@ const entityModel = (params) => {
 
     })
 
+    entityApiGETtypes(UNIT).then((txt)=>{
+
+        let unit = `${UNIT}`.toLowerCase()+'GETtypes'
+        let dir  = `${controllersDIR}/${UNIT}`
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(dir,unit,txt) }
+
+    })
+
     serverAPI().then((txt)=>{
 
         if(SHOW) { console.log(txt) }
         if(SAVE) { createNewFile(serverApiDIR,'server',txt) }
+
+    })
+
+    entityApiPOST(UNIT).then((txt)=>{
+
+        let unit = `${UNIT}`.toLowerCase()+'POST'
+        let dir  = `${controllersDIR}/${UNIT}`
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(dir,unit,txt) }
+
+    })
+
+    entityApiPUT(UNIT).then((txt)=>{
+
+        let unit = `${UNIT}`.toLowerCase()+'PUT'
+        let dir  = `${controllersDIR}/${UNIT}`
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(dir,unit,txt) }
+
+    })
+
+    entityApiDELETE(UNIT).then((txt)=>{
+
+        let unit = `${UNIT}`.toLowerCase()+'DELETE'
+        let dir  = `${controllersDIR}/${UNIT}`
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(dir,unit,txt) }
 
     })
 
@@ -124,16 +168,15 @@ let values = { ROTINE, NODE, TABLE, SCHEMA, UNIT, SAVE, SHOW }
 
 entityModel(values)
 
-
 let params = {}
-let count  = 0
+let count  = 5
 function intervalFunc() {
     params.count      = count
     params.message    = global._dsp_message
     params.time       = global._dsp_date_connection
     displayDados( params ) 
-    count++
-    if(count==10) {
+    count--
+    if(count==0) {
         params.count      = count
         params.message    = 'Bye Bye !!!'
         params.time       = moment(new Date()).format()

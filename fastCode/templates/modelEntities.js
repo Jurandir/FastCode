@@ -36,6 +36,7 @@ const modelEntities = async (table,schema,unit) => {
         key: TABLE_ID,
         sequence: TABLE_SEQ,
         autoIncrement: AUTO_ID,
+        notes: '',
         debug: DEBUG,
         fields: [
     ${FIELDS}

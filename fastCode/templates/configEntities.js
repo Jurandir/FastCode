@@ -1,26 +1,28 @@
-const moment      = require('moment')
-const fs          = require('fs');
-const makeFolders = require('../helpers/makeFolders')
+const fs            = require('fs')
+const moment        = require('moment')
 const createNewFile = require('../helpers/createNewFile')
-const configDir  = './src/database/config' 
-const configFile = 'entities.json' 
+const configDir     = './src/database/config' 
+const configFile    = 'entities.json'
+
 const _Entities = {
-    dateUpdate: null,
-    lastID: 0,
-    list:[]
-}
-const _Entity = 
-        { id: 0, 
-          name: '', 
-          description: '', 
-          tableName: '', 
-          unit : '', 
-          allows_seek: true,
-          allows_insert: true, 
-          allows_select: true,
-          allows_update: true,
-          allows_delete: true
-        }
+        dateUpdate: null,
+        lastID: 0,
+        list:[]
+    }
+
+const _Entity = { 
+        id: 0, 
+        name: '', 
+        description: '', 
+        tableName: '', 
+        unit : '', 
+        allows_seek: true,
+        allows_types: true,
+        allows_insert: true, 
+        allows_select: true,
+        allows_update: true,
+        allows_delete: true
+    }
 
 moment.locale('pt-br')        
 
@@ -55,9 +57,7 @@ const configEntities = (tableName,unit) => {
         if(SeekEntity.length<1) {
             incluiUnit()
         }
-
     }
-    
 }
 
 module.exports = configEntities

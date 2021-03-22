@@ -38,9 +38,13 @@ const routerAPI = async () => {
     const port = process.env.PORT || '${port}'
     const modo = process.env.NODE_ENV || '${modo}'
     
-    app.listen(port, function () {
-        console.log('${UNIT} - rodando na porta ${port} : Modo ${modo}')
-    })
+    function server () {
+        app.listen(port, function () {
+            console.log('${UNIT} - rodando na porta ',port ,' : Modo ',modo)
+        })
+     }
+     
+     module.exports = server
     `
     
 return txt

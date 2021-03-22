@@ -1,12 +1,12 @@
-// Fast Code v1.0 - Entity API GET Page - 21/03/2021 12:52:56
+// Fast Code v1.0 - Entity API GET Page - 21/03/2021 23:34:11
 const Bancos2 = require('../../models/Bancos2')
 const MSG = require('../../helpers/message')
 
 async function bancos2GETpage ( req, res ) {
     let { filter,page,size }  = req.query
     let condition   = filter ? filter : '' 
-    let pagina      = page ? page : 1 
-    let linhas      = size ? size : 50 
+    let pagina      = page ? Number.parseInt(page) : 1 
+    let linhas      = size ? Number.parseInt(size) : 50 
     let idMsg       = 0
         
     let retorno = {

@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Server API - 21/03/2021 12:52:56
+// Fast Code v1.0 - Server API - 21/03/2021 23:54:15
     const express      = require('express')  
     const morgan       = require('morgan')
     
@@ -24,7 +24,11 @@
     const port = process.env.PORT || '5000'
     const modo = process.env.NODE_ENV || 'Test'
     
-    app.listen(port, function () {
-        console.log('serverAPI - rodando na porta 5000 : Modo Test')
-    })
+    function server () {
+        app.listen(port, function () {
+            console.log('serverAPI - rodando na porta ',port ,' : Modo ',modo)
+        })
+     }
+     
+     module.exports = server
     

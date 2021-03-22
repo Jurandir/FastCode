@@ -1,6 +1,6 @@
 // Elementos para auxiliar/facilitar a manipulação de dados
 
-const bancos2 = require('../src/models/PG/bancos2')
+const bancos2 = require('../src/models/bancos2')
 
 let newBanco = bancos2.Defaults
 

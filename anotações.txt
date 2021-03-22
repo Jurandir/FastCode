@@ -11,3 +11,7 @@ node .\fastCode\codeGenerators\entityModel.js --table tweets --schema public --u
 ou 
 gen.bat --table tweets --schema public --unit Tweets --save --no-show
 
+-- Pendências (21/03/2021)
+* Criar estrutura de copias para Database/PG e mesagens.
+* Testar a existencia da entidade no banco.
+

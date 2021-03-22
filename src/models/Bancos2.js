@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Entities -  21/03/2021 12:52:55
+    // Fast Code v1.0 - Entities -  21/03/2021 23:34:11
     const methods  = require('../database/PG/methods')
     
     const TABLE_NAME = 'public.bancos2'
@@ -13,6 +13,7 @@
         key: TABLE_ID,
         sequence: TABLE_SEQ,
         autoIncrement: AUTO_ID,
+        notes: '',
         debug: DEBUG,
         fields: [
     

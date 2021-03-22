@@ -3,8 +3,6 @@ const sqlQuery      = require('./sqlQuery')
 const sqlExec       = require('./sqlExec')
 const paginate      = require('../../../config/paginate') 
 
-
-
 const methods = (dataModel) => {
 
     let debug         = dataModel.debug
@@ -126,6 +124,14 @@ const methods = (dataModel) => {
         return resp
     }
 
+    const FieldsTypes = () => {
+        let resp = {} 
+        dataModel.fields.map((itn,idx)=>{
+            resp[itn.name] = `${itn.type}${itn.len ? '('+itn.len+')' : ''}`
+        })
+        return resp
+    }
+
     return {
         Model: dataModel,
         Debug: setDebug,
@@ -137,7 +143,8 @@ const methods = (dataModel) => {
         Seek: execSeek,
         Disrupt: disrupt,
         LastID: execLastID,
-        Defaults: valuesDefaults() 
+        Defaults: valuesDefaults(),
+        FieldsTypes: FieldsTypes() 
     }
 }
 

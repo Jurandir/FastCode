@@ -4,6 +4,9 @@ GET:
 {tabela}
 : lista todos os dados da tabela
 
+{tabela}/types
+: mostra metadados da tabela 
+
 {tabela}/{id}
 : mostra dados referente ao ID 
 
@@ -14,4 +17,18 @@ GET:
 : Lista dados com paginação PAGINA="pagina a ser mostrada",LINHAS="Quantidade de linhas",CONDIÇÃO="Filtro SQL"
 
 
+POST:
+{tabela}
+: Inclui dados (body) na tabela
 
+PUT:
+{tabela}/{id}
+: Altera todos os dados (body) na tabela para o ID
+
+PATCH:
+{tabela}/{id}
+: Altera dados (body) na tabela para o ID
+
+DELETE:
+{tabela}/{id}
+: Exclui registro na tabela do ID

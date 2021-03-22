@@ -1,6 +1,6 @@
 {
-	"dateUpdate": "2021-03-21T10:40:51-03:00",
-	"lastID": 6,
+	"dateUpdate": "2021-03-21T23:54:15-03:00",
+	"lastID": 7,
 	"list": [
 		{
 			"id": 1,
@@ -69,6 +69,19 @@
 			"tableName": "adonis_schema",
 			"unit": "Adonis_schema",
 			"allows_seek": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 7,
+			"name": "RegisterTweetes",
+			"description": "Cadstro de tweetes",
+			"tableName": "tweetes",
+			"unit": "Tweetes",
+			"allows_seek": true,
+			"allows_types": true,
 			"allows_insert": true,
 			"allows_select": true,
 			"allows_update": true,

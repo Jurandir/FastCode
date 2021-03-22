@@ -48,9 +48,7 @@ async function ${unit}GETseek ( req, res ) {
 
 module.exports = ${unit}GETseek
 `
-
 return txt
-
 }
 
 module.exports = entityApiGETseek

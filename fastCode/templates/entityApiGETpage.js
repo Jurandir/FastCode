@@ -12,8 +12,8 @@ const MSG = require('../../helpers/message')
 async function ${unit}GETpage ( req, res ) {
     let { filter,page,size }  = req.query
     let condition   = filter ? filter : '' 
-    let pagina      = page ? page : 1 
-    let linhas      = size ? size : 50 
+    let pagina      = page ? Number.parseInt(page) : 1 
+    let linhas      = size ? Number.parseInt(size) : 50 
     let idMsg       = 0
         
     let retorno = {
@@ -53,9 +53,7 @@ async function ${unit}GETpage ( req, res ) {
 
 module.exports = ${unit}GETpage
 `
-
 return txt
-
 }
 
 module.exports = entityApiGETpage

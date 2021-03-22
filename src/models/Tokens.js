@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Entities -  21/03/2021 10:49:02
+    // Fast Code v1.0 - Entities -  21/03/2021 15:45:49
     const methods  = require('../database/PG/methods')
     
     const TABLE_NAME = 'public.tokens'
@@ -13,6 +13,7 @@
         key: TABLE_ID,
         sequence: TABLE_SEQ,
         autoIncrement: AUTO_ID,
+        notes: '',
         debug: DEBUG,
         fields: [
     
