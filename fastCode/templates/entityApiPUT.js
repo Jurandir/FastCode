@@ -7,7 +7,7 @@ async function entityApiPUT(UNIT) {
 txt = 
 `// Fast Code v1.0 - Entity API PUT / PATCH - ${now}
 const ${UNIT} = require('../../models/${UNIT}')
-const MSG = require('../../helpers/message')
+const MSG = require('../../common/helpers/message')
 
 async function ${unit}PUT ( req, res ) {
     let { tagId }     = req.params

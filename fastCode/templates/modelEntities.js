@@ -23,7 +23,7 @@ const modelEntities = async (table,schema,unit) => {
         
     txt = `
     // Fast Code v1.0 - Entities -  ${now}
-    const methods  = require('../database/PG/methods')
+    const methods  = require('../../common/database/methods')
     
     const TABLE_NAME = '${SCHEMA}.${TABLE}'
     const TABLE_ID   = '${TABLE_ID}'

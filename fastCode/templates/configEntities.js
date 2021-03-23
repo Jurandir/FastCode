@@ -1,7 +1,7 @@
 const fs            = require('fs')
 const moment        = require('moment')
-const createNewFile = require('../helpers/createNewFile')
-const configDir     = './src/database/config' 
+const createNewFile = require('../../common/helpers/createNewFile')
+const configDir     = './common/config' 
 const configFile    = 'entities.json'
 
 const _Entities = {

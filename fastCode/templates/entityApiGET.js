@@ -7,7 +7,7 @@ async function entityApiGET(UNIT) {
 txt = 
 `// Fast Code v1.0 - Entity API GET - ${now}
 const ${UNIT} = require('../../models/${UNIT}')
-const MSG = require('../../helpers/message')
+const MSG = require('../../common/helpers/message')
 
 async function ${unit}GET ( req, res ) {
     let { filter }  = req.query

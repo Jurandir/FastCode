@@ -1,4 +1,4 @@
-const sqlQuery = require('../../src/database/PG/sqlQuery')
+const sqlQuery = require('../../common/database/sqlQuery')
 
 const dataStructurePG = async (table,schema) => {
 

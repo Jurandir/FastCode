@@ -6,7 +6,7 @@ async function entityApiGETtypes(UNIT) {
 
 txt = 
 `// Fast Code v1.0 - Entity API GET Types - ${now}
-const ${UNIT} = require('../../models/${UNIT}')
+const ${UNIT} = require('../../common/models/${UNIT}')
 
 async function ${unit}GETtypes ( req, res ) {
     let idMsg       = 0

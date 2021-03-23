@@ -1,7 +1,7 @@
 const moment = require('moment')
 
 async function listAPI () {
-    let entities = require('../../src/database/config/entities.json')
+    let entities = require('../../common/config/entities.json')
     let routes = ``
     let routesUses = ``
     let now = moment().format('DD/MM/YYYY HH:mm:ss')

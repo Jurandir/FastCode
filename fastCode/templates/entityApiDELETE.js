@@ -7,7 +7,7 @@ async function entityApiDELETE(UNIT) {
 txt = 
 `// Fast Code v1.0 - Entity API DELETE - ${now}
 const ${UNIT} = require('../../models/${UNIT}')
-const MSG = require('../../helpers/message')
+const MSG = require('../../common/helpers/message')
 
 async function ${unit}DELETE ( req, res ) {
     let { tagId }     = req.params

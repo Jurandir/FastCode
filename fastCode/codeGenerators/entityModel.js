@@ -1,6 +1,6 @@
 const colors            = require('colors')
 const moment            = require('moment')
-const displayDados      = require('../helpers/displayDados')
+const displayDados      = require('../../common/helpers/displayDados')
 const modelEntities     = require('../templates/modelEntities')
 const routerAPI         = require('../templates/routerAPI')
 const configEntities    = require('../templates/configEntities')
@@ -13,7 +13,7 @@ const entityApiPOST     = require('../templates/entityApiPOST')
 const entityApiPUT      = require('../templates/entityApiPUT')
 const entityApiDELETE   = require('../templates/entityApiDELETE')
 const serverAPI         = require('../templates/serverAPI')
-const createNewFile     = require('../helpers/createNewFile')
+const createNewFile     = require('../../common/helpers/createNewFile')
 
 // node .\fastCode\codeGenerators\entityModel.js --table tweets --schema public --unit Tweets --save --no-show
 
@@ -21,8 +21,8 @@ const model_DIR       = './src/models'
 const router_DIR      = './src/routes' 
 const controllersDIR  = './src/controllers'
 const serverApiDIR    = './src/api'
-const test_DIR        = './test' 
-const backup_DIR      = './backup' 
+const test_DIR        = './common/test' 
+const backup_DIR      = './common/backup' 
 
 global._dsp_message         = ''
 global._dsp_date_connection = ''
