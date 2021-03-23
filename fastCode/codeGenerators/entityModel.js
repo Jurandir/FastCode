@@ -69,13 +69,6 @@ const entityModel = (params) => {
         
     })
 
-    listAPI().then((txt)=>{
-
-        if(SHOW) { console.log(txt) }
-        if(SAVE) { createNewFile(router_DIR,'api',txt) }
-
-    })
-
     entityApiGET(UNIT).then((txt)=>{
 
         let unit = `${UNIT}`.toLowerCase()+'GET'
@@ -152,6 +145,14 @@ const entityModel = (params) => {
         if(SAVE) { createNewFile(dir,unit,txt) }
 
     })
+
+    listAPI().then((txt)=>{
+
+        if(SHOW) { console.log(txt) }
+        if(SAVE) { createNewFile(router_DIR,'api',txt) }
+
+    })
+
 
 }
 
