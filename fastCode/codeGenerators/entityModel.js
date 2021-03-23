@@ -35,6 +35,8 @@ let UNIT       = null
 let SAVE       = false
 let SHOW       = true
 
+let geraListaAPI
+
 process.stdout.write('\x1B[2J\x1B[0f')
 const titulo = '[Fast Code - By: Jurandir Ferreira]'.yellow.bgBlue.bold
 console.log(titulo)
@@ -146,12 +148,14 @@ const entityModel = (params) => {
 
     })
 
-    listAPI().then((txt)=>{
+    geraListaAPI = () => {
+        listAPI().then((txt)=>{
 
-        if(SHOW) { console.log(txt) }
-        if(SAVE) { createNewFile(router_DIR,'api',txt) }
+            if(SHOW) { console.log(txt) }
+            if(SAVE) { createNewFile(router_DIR,'api',txt) }
 
-    })
+        })
+    }
 
 
 }
@@ -177,6 +181,9 @@ function intervalFunc() {
     params.time       = global._dsp_date_connection
     displayDados( params ) 
     count--
+    
+    if(count==3) { geraListaAPI() }
+
     if(count==0) {
         params.count      = count
         params.message    = 'Bye Bye !!!'
