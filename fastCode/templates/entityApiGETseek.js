@@ -7,7 +7,7 @@ async function entityApiGETseek(UNIT) {
 txt = 
 `// Fast Code v1.0 - Entity API GET Seek - ${now}
 const ${UNIT} = require('../../models/${UNIT}')
-const MSG = require('../../common/helpers/message')
+const MSG = require('../../../common/helpers/message')
 
 async function ${unit}GETseek ( req, res ) {
     let { tagId }   = req.params
