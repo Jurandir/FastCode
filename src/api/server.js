@@ -1,12 +1,14 @@
 // Fast Code v1.0 - Server API - 22/03/2021 23:35:12
     const express      = require('express')  
     const morgan       = require('morgan')
+    const path         = require('path')
     
     const app = express()  
     
     const api = require('../routes/api')  
     
     app.use(express.static('public'))
+    app.use(express.static('works'))
     app.use(morgan('dev'))
     
     app.use(function (req, res, next) {  
@@ -19,7 +21,14 @@
     app.use(express.urlencoded({ extended: true }))
     app.use(express.json())
     
-    app.use('/api', api )  
+    app.use('/api', api )
+
+        
+    app.get('/',(req,res)=>{
+
+        res.sendFile( path.join(__dirname + '../../../works/inputs.html') )
+
+    })
     
     const port = process.env.PORT || '5000'
     const modo = process.env.NODE_ENV || 'Test'

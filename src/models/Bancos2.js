@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Entities -  22/03/2021 23:35:12
+    // Fast Code v1.0 - Entities -  26/03/2021 23:21:34
     const methods  = require('../../common/database/methods')
     
     const TABLE_NAME = 'public.bancos2'

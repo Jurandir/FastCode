@@ -19,6 +19,7 @@ async function ${unit}GETtypes ( req, res ) {
         autoIncrement: ${UNIT}.Model.autoIncrement,
         types: ${UNIT}.FieldsTypes,
         defaults: ${UNIT}.Defaults,
+        captions: ${UNIT}.Captions,
         notes: ${UNIT}.Model.notes
     }
     

@@ -124,6 +124,14 @@ const methods = (dataModel) => {
         return resp
     }
 
+    const valuesCaptions = () => {
+        let resp = {} 
+        dataModel.fields.map((itn,idx)=>{
+            resp[itn.name] = itn.caption
+        })
+        return resp
+    }
+
     const FieldsTypes = () => {
         let resp = {} 
         dataModel.fields.map((itn,idx)=>{
@@ -144,6 +152,7 @@ const methods = (dataModel) => {
         Disrupt: disrupt,
         LastID: execLastID,
         Defaults: valuesDefaults(),
+        Captions: valuesCaptions(),
         FieldsTypes: FieldsTypes() 
     }
 }

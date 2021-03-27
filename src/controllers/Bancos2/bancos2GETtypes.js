@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API GET Types - 22/03/2021 23:35:12
+// Fast Code v1.0 - Entity API GET Types - 26/03/2021 23:21:35
 const Bancos2 = require('../../models/Bancos2')
 
 async function bancos2GETtypes ( req, res ) {
@@ -12,6 +12,7 @@ async function bancos2GETtypes ( req, res ) {
         autoIncrement: Bancos2.Model.autoIncrement,
         types: Bancos2.FieldsTypes,
         defaults: Bancos2.Defaults,
+        captions: Bancos2.Captions,
         notes: Bancos2.Model.notes
     }
     

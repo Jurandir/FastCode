@@ -15,12 +15,15 @@ const routerAPI = async () => {
     `// Fast Code v1.0 - Server API - ${now}
     const express      = require('express')  
     const morgan       = require('morgan')
+    const path         = require('path')
     
     const app = express()  
     
     const api = require('../routes/api')  
     
     app.use(express.static('public'))
+    app.use(express.static('works'))
+
     app.use(morgan('dev'))
     
     app.use(function (req, res, next) {  
@@ -34,6 +37,12 @@ const routerAPI = async () => {
     app.use(express.json())
     
     app.use('/api', api )  
+
+    app.get('/',(req,res)=>{
+
+        res.sendFile( path.join(__dirname + '../../../works/inputs.html') )
+
+    })
     
     const port = process.env.PORT || '${port}'
     const modo = process.env.NODE_ENV || '${modo}'

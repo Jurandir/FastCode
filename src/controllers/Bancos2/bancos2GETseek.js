@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API GET Seek - 22/03/2021 23:35:12
+// Fast Code v1.0 - Entity API GET Seek - 26/03/2021 23:21:35
 const Bancos2 = require('../../models/Bancos2')
 const MSG = require('../../../common/helpers/message')
 
