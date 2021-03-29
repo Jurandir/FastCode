@@ -2,26 +2,36 @@
 
 ((win,doc)=>{
 
-    let div_tabela   = doc.getElementById("div_tabela") 
-    let btn_novo     = doc.getElementById("btn_novo")
-    let btn_seek     = doc.getElementById("btn_seek")
-    let head_table   = doc.getElementById("head_table")
-    let lines_table  = doc.getElementById("lines_table")
-    let body_table   = doc.getElementById("body_table")
-    let fields       = []
-    let field_ID     = 'id'
-    let url_types    = '/api/bancos2/types'
-    let url_dados    = '/api/bancos2'
+    let div_tabela      = doc.getElementById("div_tabela") 
+    let div_tela        = doc.getElementById("div_tela") 
+    let div_tela_campos = doc.getElementById("div_tela_campos")
+    let btn_novo        = doc.getElementById("btn_novo")
+    let btn_seek        = doc.getElementById("btn_seek")
+    let head_table      = doc.getElementById("head_table")
+    let lines_table     = doc.getElementById("lines_table")
+    let body_table      = doc.getElementById("body_table")
+    let btn_tela_cancel = doc.getElementById("btn_tela_cancel")
+    let fields          = []
+    let field_ID        = 'id'
+    let url_types       = '/api/bancos2/types'
+    let url_dados       = '/api/bancos2'
+    let flag_debug      = false
 
     head_table.innerHTML  = ''
     body_table.innerHTML  = ''
 
     let dados      = {}
 
+
+    function text_acao_tela(text){
+        let elemen = doc.getElementById("text_acao_tela")
+        elemen.innerHTML = text 
+    }
+
     function criaElementoBtnMostar(item) {
         let id = `Mostar_${item}`
         let classe = "bi bi-file-earmark-text"
-        let estilo = "font-size: 1.5rem; color: cornflowerblue;"
+        let estilo = "font-size: 1.5rem; color: cornflowerblue; margin-left: 5px; cursor: pointer;"
         let elemento = criaElemento('i',id, classe, estilo)
         elemento.addEventListener("click", function(){actionsMostrarExec(item)}, false);
         return elemento
@@ -30,7 +40,7 @@
     function criaElementoBtnEditar(item) {
         let id = `Editar_${item}` 
         let classe = "bi bi-pencil"
-        let estilo = "font-size: 1.5rem; color: rgb(212, 237, 100);"
+        let estilo = "font-size: 1.5rem; color: rgb(212, 237, 100); margin-left: 5px; cursor: pointer;"
         let elemento = criaElemento('i',id, classe, estilo)
         elemento.addEventListener("click", function(){actionsEditarExec(item)}, false);
         return elemento
@@ -39,7 +49,7 @@
     function criaElementoBtnExcluir(item) {
         let id =  `Ecluir_${item}`
         let classe = "bi bi-trash"
-        let estilo = "font-size: 1.5rem; color: rgb(235, 65, 65);"
+        let estilo = "font-size: 1.5rem; color: rgb(235, 65, 65); margin-left: 5px; cursor: pointer;"
         let elemento = criaElemento('i',id, classe, estilo)
         elemento.addEventListener("click", function(){actionsExcluirExec(item)}, false);
         return elemento
@@ -53,22 +63,32 @@
         return elemento
     }
 
-    btn_novo.addEventListener("click", btn_novo_exec )
-    btn_seek.addEventListener("click", btn_seek_exec )
+    function hide_all_div() {
+        div_tabela.style.display = "none" 
+        div_tela.style.display   = "none"  
+    }
 
-    console.log('Leu JS')
+    function show_div(div) {
+        hide_all_div()
+        div.style.display = 'block'  
+    }
 
     function btn_novo_exec() {
-
-        console.log('NOVO')    
-        div_tabela.style.display = "none"    
+        if(flag_debug) { console.log('Clicou NOVO') }    
+        show_div( div_tela )  
+        text_acao_tela('Inclusão') 
     }
 
     function btn_seek_exec() {
-    
-        console.log('SEEK')    
-        div_tabela.style.display = "block"
-    
+        if(flag_debug) { console.log('Clicou SEEK') }   
+        show_div( div_tabela )  
+        text_acao_tela('Pesquisa') 
+    }
+
+    function btn_cancel_exec() {
+        if(flag_debug) { console.log('Clicou CANCELAR') }   
+        hide_all_div()  
+        text_acao_tela('Cancelar') 
     }
 
     function append(element,tag, str) {
@@ -84,20 +104,29 @@
         return child
     }
 
-
     function actionsMostrarExec(id) {
-       console.log('actionsMostrarExec ID:',id);
+        if(flag_debug) { console.log('actionsMostrarExec ID:',id) }
+        show_div( div_tela )  
+        text_acao_tela('Cadastro') 
     }
 
     function actionsEditarExec(id) {
-        console.log('actionsEditarExec ID:',id);
+        if(flag_debug) { console.log('actionsEditarExec ID:',id) }
+        show_div( div_tela )  
+        text_acao_tela('Alteração') 
      }
  
      function actionsExcluirExec(id) {
-        console.log('actionsExcluirExec ID:',id);
+        if(flag_debug) { console.log('actionsExcluirExec ID:',id) }
+        show_div( div_tela )  
+        text_acao_tela('Exclusão') 
      }
 
-
+     btn_novo.addEventListener("click", btn_novo_exec )
+     btn_seek.addEventListener("click", btn_seek_exec )
+     btn_tela_cancel.addEventListener("click", btn_cancel_exec )
+     
+ 
     fetch(url_types, { method: 'GET' })
     .then(response => response.json())
     .then(ret => { 
@@ -110,14 +139,14 @@
         }
 
         field_ID = dados.key
-
-        console.log('Key field:',field_ID)
-        console.log('fields:',fields)
+        if(flag_debug) { 
+            console.log('Key field:',field_ID)
+            console.log('fields:',fields)
+        }
 
         let captions = dados.captions
         for (let caption in captions) {
             if (captions.hasOwnProperty(caption)) {
-                // <th scope="col">Conhecimento</th>
                 let child = append( head_table ,'th', captions[caption])
                 child.setAttribute('scope','col')
             }
@@ -126,17 +155,15 @@
         let actions = append( head_table ,'th', 'Ação')
         actions.setAttribute('scope','col')
         actions.setAttribute('style',"width: 105px; text-align: center;")
-        
-        
     })
-    .catch(err => console.log(err.message))
+    .catch(err => console.log('Err:',err.message))
 
     fetch(url_dados, { method: 'GET' })
     .then(response => response.json())
     .then(ret => { 
         let itens = ret.data
 
-        console.log('itens:',itens)
+        if(flag_debug) { console.log('itens:',itens) }
 
         for (let item in itens) {
 
@@ -145,14 +172,14 @@
     
             fields.map((field)=>{
                     let linha = itens[item]
-                    console.log('>>>>',linha)
+                    if(flag_debug) { console.log('Linha:',linha) }
                     let campo = append( lines_table ,'td', linha[field])
                     campo.setAttribute('class','td-sm')
             })
 
             let key_ID = itens[item][field_ID]
 
-            console.log('key_ID',key_ID,field_ID,item)
+            if(flag_debug) { console.log('key_ID',key_ID,field_ID,item) }
 
             let butons = novoElemento( lines_table ,'th')
             butons.setAttribute('class','td-sm')
@@ -169,10 +196,8 @@
 
         }        
     })
-    .catch(err => console.log(err.message))
-    
+    .catch(err => console.log('Err:',err.message))
 
-    
 })(window,document)
 
 
