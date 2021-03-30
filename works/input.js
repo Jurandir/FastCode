@@ -122,10 +122,34 @@
         text_acao_tela('Exclusão') 
      }
 
+     function createElementInputText(name,caption,value,col_md,readOnly) {
+      let div_row = document.createElement('div');
+      div_row.setAttribute('class',`row`)
+
+      let div_col = document.createElement('div');
+      div_col.setAttribute('class',`col-md-${col_md}`)
+      div_row.appendChild(div_col)
+
+      let label = document.createElement('label');
+      label.setAttribute('for',`Tela_${name}`)
+      label.setAttribute('class',`col-md-12 col-form-label text-md-left py-0`)
+      label.innerHTML = caption
+      div_col.appendChild(label)
+
+      let input = document.createElement('input');
+      input.setAttribute('type',`text`)
+      input.setAttribute('id',`Tela_${name}`)
+      input.setAttribute('class',`form-control`)
+      input.setAttribute('style',`text-align: right`)
+      input.setAttribute('value',`${value}`)
+      input.readOnly = readOnly
+      div_col.appendChild(input)
+      return div_row
+     }
+
      btn_novo.addEventListener("click", btn_novo_exec )
      btn_seek.addEventListener("click", btn_seek_exec )
      btn_tela_cancel.addEventListener("click", btn_cancel_exec )
-     
  
     fetch(url_types, { method: 'GET' })
     .then(response => response.json())
@@ -194,7 +218,11 @@
             let elemIconExcluir = criaElementoBtnExcluir(key_ID)
             butons.appendChild(elemIconExcluir)
 
-        }        
+        }
+        
+        let elementoXX = createElementInputText('XX','Teste','001',3,false)
+        div_tela_campos.appendChild(elementoXX)
+
     })
     .catch(err => console.log('Err:',err.message))
 
