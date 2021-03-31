@@ -122,29 +122,98 @@
         text_acao_tela('Exclusão') 
      }
 
+     function createElementInputInt(name,caption,value,col_md,readOnly) {
+        let type = 'number'
+        let alignInput = 'rigth'
+        let attributes = [
+            {chave: "type"  , value: `${type}`},
+            {chave: "id"    , value: `Tela_${name}`},
+            {chave: "class" , value: "form-control"},
+            {chave: "style" , value: `text-align: ${alignInput}`},
+            {chave: "value" , value: `${value}`},
+            {chave: "min"   , value: "0"},
+            {chave: "max"   , value: "9999999999"},
+            {chave: "step"  , value: "1" },
+        ]
+        return createElementInput(name,caption,col_md,readOnly,attributes)
+     }
+
+     function createElementInputNumber(name,caption,value,col_md,readOnly) {
+        let type = 'number'
+        let alignInput = 'rigth'
+        let attributes = [
+            {chave: "type"  , value: `${type}`},
+            {chave: "id"    , value: `Tela_${name}`},
+            {chave: "class" , value: "form-control"},
+            {chave: "style" , value: `text-align: ${alignInput}`},
+            {chave: "value" , value: `${value}`},
+            {chave: "min"   , value: "0.00"},
+            {chave: "max"   , value: "9999999999.99"},
+            {chave: "step"  , value: "0.01" },
+        ]
+        return createElementInput(name,caption,col_md,readOnly,attributes)
+     }
+
+     function createElementInputDateTime(name,caption,value,col_md,readOnly) {
+        let type = 'datetime-local'
+        let alignInput = 'center'
+        let attributes = [
+            {chave: "type"  , value: `${type}`},
+            {chave: "id"    , value: `Tela_${name}`},
+            {chave: "class" , value: "form-control"},
+            {chave: "style" , value: `text-align: ${alignInput}`},
+            {chave: "value" , value: `${value}`},
+        ]
+        return createElementInput(name,caption,col_md,readOnly,attributes)
+     }
+
+     function createElementInputDate(name,caption,value,col_md,readOnly) {
+        let type = 'date'
+        let alignInput = 'center'
+        let attributes = [
+            {chave: "type"  , value: `${type}`},
+            {chave: "id"    , value: `Tela_${name}`},
+            {chave: "class" , value: "form-control"},
+            {chave: "style" , value: `text-align: ${alignInput}`},
+            {chave: "value" , value: `${value}`},
+        ]
+        return createElementInput(name,caption,col_md,readOnly,attributes)
+     }
+
      function createElementInputText(name,caption,value,col_md,readOnly) {
-      let div_row = document.createElement('div');
-      div_row.setAttribute('class',`row`)
+        let type = 'text'
+        let alignInput = 'left'
+        let attributes = [
+            {chave: "type"  , value: `${type}`},
+            {chave: "id"    , value: `Tela_${name}`},
+            {chave: "class" , value: "form-control"},
+            {chave: "style" , value: `text-align: ${alignInput}`},
+            {chave: "value" , value: `${value}`},
+        ]
+        return createElementInput(name,caption,col_md,readOnly,attributes)
+     }
 
-      let div_col = document.createElement('div');
-      div_col.setAttribute('class',`col-md-${col_md}`)
-      div_row.appendChild(div_col)
+     function createElementInput(name,caption,col_md,readOnly,attributes) {
+        let div_row = document.createElement('div');
+        div_row.setAttribute('class',`row`)
 
-      let label = document.createElement('label');
-      label.setAttribute('for',`Tela_${name}`)
-      label.setAttribute('class',`col-md-12 col-form-label text-md-left py-0`)
-      label.innerHTML = caption
-      div_col.appendChild(label)
+        let div_col = document.createElement('div');
+        div_col.setAttribute('class',`col-md-${col_md}`)
+        div_row.appendChild(div_col)
 
-      let input = document.createElement('input');
-      input.setAttribute('type',`text`)
-      input.setAttribute('id',`Tela_${name}`)
-      input.setAttribute('class',`form-control`)
-      input.setAttribute('style',`text-align: right`)
-      input.setAttribute('value',`${value}`)
-      input.readOnly = readOnly
-      div_col.appendChild(input)
-      return div_row
+        let label = document.createElement('label');
+        label.setAttribute('for',`Tela_${name}`)
+        label.setAttribute('class',`col-md-12 col-form-label text-md-left py-0`)
+        label.innerHTML = caption
+        div_col.appendChild(label)
+
+        let input = document.createElement('input');
+        for( let i of attributes) {
+            input.setAttribute(i.chave,i.value)    
+        }
+        input.readOnly = readOnly
+        div_col.appendChild(input)
+        return div_row
      }
 
      btn_novo.addEventListener("click", btn_novo_exec )
@@ -220,8 +289,17 @@
 
         }
         
-        let elementoXX = createElementInputText('XX','Teste','001',3,false)
+        let elementoII = createElementInputInt('II','Inteiro','000001',2,false)
+        let elementoXX = createElementInputText('XX','Texto.','Nome exemplo',8,false)
+        let elementoYY = createElementInputDate('YY','Emissão.','2021-02-01',3,false)
+        let elementoZZ = createElementInputDateTime('ZZ','Date Time.','2018-06-12T19:30',3,false)
+        let elementoMM = createElementInputNumber('MM','Money.','1234.89',2,false)
+
+        div_tela_campos.appendChild(elementoII)
         div_tela_campos.appendChild(elementoXX)
+        div_tela_campos.appendChild(elementoYY)
+        div_tela_campos.appendChild(elementoZZ)
+        div_tela_campos.appendChild(elementoMM)
 
     })
     .catch(err => console.log('Err:',err.message))
