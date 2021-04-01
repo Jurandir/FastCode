@@ -248,9 +248,39 @@
         let actions = append( head_table ,'th', 'Ação')
         actions.setAttribute('scope','col')
         actions.setAttribute('style',"width: 105px; text-align: center;")
+
+        console.log('Dados:',dados)
+
+        let types = dados.types
+        fields.forEach((field)=>{
+            let type = types[field]
+            let tipo = type.substring(0,type.indexOf("(")).trim()
+            let len  = parseInt( '0'+type.substring(type.indexOf("(") + 1,type.indexOf(")") ) , 10)
+            let readOnly = (field == field_ID)
+
+            tipo = tipo ? tipo : type
+
+            console.log('Fields:',field,type,tipo,len,readOnly) 
+        })
+
+
+        let elementoII = createElementInputInt('II','Inteiro','000001',2,false)
+        let elementoXX = createElementInputText('XX','Texto.','Nome exemplo',8,false)
+        let elementoYY = createElementInputDate('YY','Emissão.','2021-02-01',3,false)
+        let elementoZZ = createElementInputDateTime('ZZ','Date Time.','2018-06-12T19:30',3,false)
+        let elementoMM = createElementInputNumber('MM','Money.','1234.89',2,false)
+
+        div_tela_campos.appendChild(elementoII)
+        div_tela_campos.appendChild(elementoXX)
+        div_tela_campos.appendChild(elementoYY)
+        div_tela_campos.appendChild(elementoZZ)
+        div_tela_campos.appendChild(elementoMM)
+
+
     })
     .catch(err => console.log('Err:',err.message))
 
+    //--- Dados --- //
     fetch(url_dados, { method: 'GET' })
     .then(response => response.json())
     .then(ret => { 
@@ -289,18 +319,6 @@
 
         }
         
-        let elementoII = createElementInputInt('II','Inteiro','000001',2,false)
-        let elementoXX = createElementInputText('XX','Texto.','Nome exemplo',8,false)
-        let elementoYY = createElementInputDate('YY','Emissão.','2021-02-01',3,false)
-        let elementoZZ = createElementInputDateTime('ZZ','Date Time.','2018-06-12T19:30',3,false)
-        let elementoMM = createElementInputNumber('MM','Money.','1234.89',2,false)
-
-        div_tela_campos.appendChild(elementoII)
-        div_tela_campos.appendChild(elementoXX)
-        div_tela_campos.appendChild(elementoYY)
-        div_tela_campos.appendChild(elementoZZ)
-        div_tela_campos.appendChild(elementoMM)
-
     })
     .catch(err => console.log('Err:',err.message))
 
