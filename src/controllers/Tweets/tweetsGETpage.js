@@ -1,8 +1,8 @@
-// Fast Code v1.0 - Entity API GET Page - 04/04/2021 00:26:35
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API GET Page - 03/04/2021 21:59:01
+const Tweets = require('../../models/Tweets')
 const MSG = require('../../../common/helpers/message')
 
-async function bancos2GETpage ( req, res ) {
+async function tweetsGETpage ( req, res ) {
     let { filter,page,size }  = req.query
     let condition   = filter ? filter : '' 
     let pagina      = page ? Number.parseInt(page) : 1 
@@ -20,9 +20,9 @@ async function bancos2GETpage ( req, res ) {
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tweets.Debug(false)
 
-    Bancos2.Page(condition,pagina,linhas).then(ret=>{
+    Tweets.Page(condition,pagina,linhas).then(ret=>{
         idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -44,4 +44,4 @@ async function bancos2GETpage ( req, res ) {
     })
 }
 
-module.exports = bancos2GETpage
+module.exports = tweetsGETpage

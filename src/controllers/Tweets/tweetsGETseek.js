@@ -1,33 +1,31 @@
-// Fast Code v1.0 - Entity API POST - 04/04/2021 00:26:35
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API GET Seek - 03/04/2021 21:59:01
+const Tweets = require('../../models/Tweets')
 const MSG = require('../../../common/helpers/message')
 
-async function bancos2POST ( req, res ) {
-    let body          = req.body
-    let idMsg         = 3
-
+async function tweetsGETseek ( req, res ) {
+    let { tagId }   = req.params
+    let idMsg       = 0
+        
     let retorno = {
         success: true,
-        id: 0,
-        autoIncrement: Bancos2.Model.autoIncrement,
         message: '',
+        data: [],
+        params: tagId,
         code: 0,
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tweets.Debug(false)
 
-    Bancos2.Insert(body).then(ret=>{
-        idMsg           = ret.ID ? 3 : 8
+    Tweets.Seek(tagId).then(ret=>{
+        idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
         retorno.success = msg.success
-        retorno.id      = ret.ID
+        retorno.data    = ret.rows
         retorno.message = msg.message
 
-        // console.log('Response :',ret.command,ret.rowCount)
-
-        res.json(retorno).status(retorno.code || 201)
+        res.json(retorno).status(retorno.code || 200)
 
     }).catch((err)=>{
         idMsg           = 2
@@ -39,7 +37,6 @@ async function bancos2POST ( req, res ) {
 
         res.json(retorno).status(retorno.code || 500) 
     })
-
 }
 
-module.exports = bancos2POST
+module.exports = tweetsGETseek

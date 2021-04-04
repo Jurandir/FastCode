@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API PUT / PATCH - 26/03/2021 23:21:35
+// Fast Code v1.0 - Entity API PUT / PATCH - 04/04/2021 00:26:35
 const Bancos2 = require('../../models/Bancos2')
 const MSG = require('../../../common/helpers/message')
 

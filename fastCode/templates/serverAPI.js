@@ -21,7 +21,7 @@ const routerAPI = async () => {
     
     const api = require('../routes/api')  
     
-    app.use(express.static('public'))
+    app.use('/public',express.static('public'))
     app.use(express.static('works'))
 
     app.use(morgan('dev'))
@@ -50,6 +50,7 @@ const routerAPI = async () => {
     function server () {
         app.listen(port, function () {
             console.log('${UNIT} - rodando na porta ',port ,' : Modo ',modo)
+            console.log('http://localhost:'+port)
         })
      }
      

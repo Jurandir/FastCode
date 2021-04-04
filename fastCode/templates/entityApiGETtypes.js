@@ -14,6 +14,7 @@ async function ${unit}GETtypes ( req, res ) {
     let retorno = {
         success: true,
         message: 'Tipos de dados',
+        title: ${UNIT}.Model.title,
         table: ${UNIT}.Model.table_name,
         key: ${UNIT}.Model.key,
         autoIncrement: ${UNIT}.Model.autoIncrement,

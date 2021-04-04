@@ -1,8 +1,8 @@
-// Fast Code v1.0 - Entity API DELETE - 04/04/2021 00:26:35
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API DELETE - 03/04/2021 21:59:01
+const Tweets = require('../../models/Tweets')
 const MSG = require('../../../common/helpers/message')
 
-async function bancos2DELETE ( req, res ) {
+async function tweetsDELETE ( req, res ) {
     let { tagId }     = req.params
     let idMsg         = 4
 
@@ -15,9 +15,9 @@ async function bancos2DELETE ( req, res ) {
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tweets.Debug(false)
 
-    Bancos2.Delete(tagId).then(ret=>{
+    Tweets.Delete(tagId).then(ret=>{
         idMsg            = ret.rowCount ? 4 : 8
         msg              = MSG(idMsg)
         retorno.code     = msg.code
@@ -42,4 +42,4 @@ async function bancos2DELETE ( req, res ) {
 
 }
 
-module.exports = bancos2DELETE
+module.exports = tweetsDELETE

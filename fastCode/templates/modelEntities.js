@@ -25,14 +25,16 @@ const modelEntities = async (table,schema,unit) => {
     // Fast Code v1.0 - Entities -  ${now}
     const methods  = require('../../common/database/methods')
     
-    const TABLE_NAME = '${SCHEMA}.${TABLE}'
-    const TABLE_ID   = '${TABLE_ID}'
-    const TABLE_SEQ  = '${TABLE_SEQ}'
-    const AUTO_ID    = ${AUTO_ID}
-    const DEBUG      = ${DEBUG}
+    const TABLE_NAME  = '${SCHEMA}.${TABLE}'
+    const TABLE_TITLE = 'Cadastro de ${TABLE}'
+    const TABLE_ID    = '${TABLE_ID}'
+    const TABLE_SEQ   = '${TABLE_SEQ}'
+    const AUTO_ID     = ${AUTO_ID}
+    const DEBUG       = ${DEBUG}
     
     const ${UNIT} = methods({
         table_name: TABLE_NAME,
+        title: TABLE_TITLE,
         key: TABLE_ID,
         sequence: TABLE_SEQ,
         autoIncrement: AUTO_ID,

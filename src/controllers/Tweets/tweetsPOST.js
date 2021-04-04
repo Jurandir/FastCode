@@ -1,23 +1,23 @@
-// Fast Code v1.0 - Entity API POST - 04/04/2021 00:26:35
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API POST - 03/04/2021 21:59:01
+const Tweets = require('../../models/Tweets')
 const MSG = require('../../../common/helpers/message')
 
-async function bancos2POST ( req, res ) {
+async function tweetsPOST ( req, res ) {
     let body          = req.body
     let idMsg         = 3
 
     let retorno = {
         success: true,
         id: 0,
-        autoIncrement: Bancos2.Model.autoIncrement,
+        autoIncrement: Tweets.Model.autoIncrement,
         message: '',
         code: 0,
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tweets.Debug(false)
 
-    Bancos2.Insert(body).then(ret=>{
+    Tweets.Insert(body).then(ret=>{
         idMsg           = ret.ID ? 3 : 8
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -42,4 +42,4 @@ async function bancos2POST ( req, res ) {
 
 }
 
-module.exports = bancos2POST
+module.exports = tweetsPOST

@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Server API - 22/03/2021 23:35:12
+// Fast Code v1.0 - Server API - 04/04/2021 00:26:35
     const express      = require('express')  
     const morgan       = require('morgan')
     const path         = require('path')
@@ -7,8 +7,9 @@
     
     const api = require('../routes/api')  
     
-    app.use(express.static('public'))
+    app.use('/public',express.static('public'))
     app.use(express.static('works'))
+
     app.use(morgan('dev'))
     
     app.use(function (req, res, next) {  
@@ -21,9 +22,8 @@
     app.use(express.urlencoded({ extended: true }))
     app.use(express.json())
     
-    app.use('/api', api )
+    app.use('/api', api )  
 
-        
     app.get('/',(req,res)=>{
 
         res.sendFile( path.join(__dirname + '../../../works/inputs.html') )
@@ -36,6 +36,7 @@
     function server () {
         app.listen(port, function () {
             console.log('serverAPI - rodando na porta ',port ,' : Modo ',modo)
+            console.log('http://localhost:'+port)
         })
      }
      

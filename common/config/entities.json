@@ -1,6 +1,6 @@
 {
-	"dateUpdate": "2021-03-22T23:35:12-03:00",
-	"lastID": 1,
+	"dateUpdate": "2021-04-03T15:53:47-03:00",
+	"lastID": 2,
 	"list": [
 		{
 			"id": 1,
@@ -8,6 +8,19 @@
 			"description": "Cadstro de bancos2",
 			"tableName": "bancos2",
 			"unit": "Bancos2",
+			"allows_seek": true,
+			"allows_types": true,
+			"allows_insert": true,
+			"allows_select": true,
+			"allows_update": true,
+			"allows_delete": true
+		},
+		{
+			"id": 2,
+			"name": "RegisterTweets",
+			"description": "Cadstro de tweets",
+			"tableName": "tweets",
+			"unit": "Tweets",
 			"allows_seek": true,
 			"allows_types": true,
 			"allows_insert": true,
