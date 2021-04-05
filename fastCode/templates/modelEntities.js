@@ -13,20 +13,21 @@ const modelEntities = async (table,schema,unit) => {
 
     let now = moment().format('DD/MM/YYYY HH:mm:ss')
 
-    await dataStructure(TABLE,SCHEMA).then(({dbColumns,keys,inc })=> {
+    await dataStructure(TABLE,SCHEMA).then(({dbColumns,keys,inc,description })=> {
 
-        const TABLE_ID   = keys.join()
-        const TABLE_SEQ  = ''
-        const AUTO_ID    = inc
-        const DEBUG      = true
-        const FIELDS     = makeColumns(dbColumns)
+        const TABLE_ID    = keys.join()
+        const TABLE_SEQ   = ''
+        const AUTO_ID     = inc
+        const DEBUG       = true
+        const FIELDS      = makeColumns(dbColumns)
+        const DESCRIPTION = description
         
     txt = `
     // Fast Code v1.0 - Entities -  ${now}
     const methods  = require('../../common/database/methods')
     
     const TABLE_NAME  = '${SCHEMA}.${TABLE}'
-    const TABLE_TITLE = 'Cadastro de ${TABLE}'
+    const TABLE_TITLE = '${DESCRIPTION}'
     const TABLE_ID    = '${TABLE_ID}'
     const TABLE_SEQ   = '${TABLE_SEQ}'
     const AUTO_ID     = ${AUTO_ID}

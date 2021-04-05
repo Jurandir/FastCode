@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API GET Types - 03/04/2021 21:59:01
+// Fast Code v1.0 - Entity API GET Types - 04/04/2021 22:11:34
 const Tweets = require('../../models/Tweets')
 
 async function tweetsGETtypes ( req, res ) {

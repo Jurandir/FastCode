@@ -1,23 +1,23 @@
-// Fast Code v1.0 - Entity API POST - 04/04/2021 22:11:34
-const Tweets = require('../../models/Tweets')
+// Fast Code v1.0 - Entity API POST - 04/04/2021 22:14:25
+const Tokens = require('../../models/Tokens')
 const MSG = require('../../../common/helpers/message')
 
-async function tweetsPOST ( req, res ) {
+async function tokensPOST ( req, res ) {
     let body          = req.body
     let idMsg         = 3
 
     let retorno = {
         success: true,
         id: 0,
-        autoIncrement: Tweets.Model.autoIncrement,
+        autoIncrement: Tokens.Model.autoIncrement,
         message: '',
         code: 0,
         err: ''
     }
     
-    Tweets.Debug(false)
+    Tokens.Debug(false)
 
-    Tweets.Insert(body).then(ret=>{
+    Tokens.Insert(body).then(ret=>{
         idMsg           = ret.ID ? 3 : 8
         msg             = MSG(idMsg)
         retorno.code    = msg.code
@@ -42,4 +42,4 @@ async function tweetsPOST ( req, res ) {
 
 }
 
-module.exports = tweetsPOST
+module.exports = tokensPOST

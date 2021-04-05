@@ -1,33 +1,31 @@
-// Fast Code v1.0 - Entity API POST - 04/04/2021 22:11:34
-const Tweets = require('../../models/Tweets')
+// Fast Code v1.0 - Entity API GET Seek - 04/04/2021 22:14:25
+const Tokens = require('../../models/Tokens')
 const MSG = require('../../../common/helpers/message')
 
-async function tweetsPOST ( req, res ) {
-    let body          = req.body
-    let idMsg         = 3
-
+async function tokensGETseek ( req, res ) {
+    let { tagId }   = req.params
+    let idMsg       = 0
+        
     let retorno = {
         success: true,
-        id: 0,
-        autoIncrement: Tweets.Model.autoIncrement,
         message: '',
+        data: [],
+        params: tagId,
         code: 0,
         err: ''
     }
     
-    Tweets.Debug(false)
+    Tokens.Debug(false)
 
-    Tweets.Insert(body).then(ret=>{
-        idMsg           = ret.ID ? 3 : 8
+    Tokens.Seek(tagId).then(ret=>{
+        idMsg           =  ret.rows.length>0 ? 1 : 0
         msg             = MSG(idMsg)
         retorno.code    = msg.code
         retorno.success = msg.success
-        retorno.id      = ret.ID
+        retorno.data    = ret.rows
         retorno.message = msg.message
 
-        // console.log('Response :',ret.command,ret.rowCount)
-
-        res.json(retorno).status(retorno.code || 201)
+        res.json(retorno).status(retorno.code || 200)
 
     }).catch((err)=>{
         idMsg           = 2
@@ -39,7 +37,6 @@ async function tweetsPOST ( req, res ) {
 
         res.json(retorno).status(retorno.code || 500) 
     })
-
 }
 
-module.exports = tweetsPOST
+module.exports = tokensGETseek

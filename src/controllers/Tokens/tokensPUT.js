@@ -1,8 +1,8 @@
-// Fast Code v1.0 - Entity API PUT / PATCH - 04/04/2021 22:11:06
-const Bancos2 = require('../../models/Bancos2')
+// Fast Code v1.0 - Entity API PUT / PATCH - 04/04/2021 22:14:25
+const Tokens = require('../../models/Tokens')
 const MSG = require('../../../common/helpers/message')
 
-async function bancos2PUT ( req, res ) {
+async function tokensPUT ( req, res ) {
     let { tagId }     = req.params
     let body          = req.body
     let idMsg         = 5
@@ -17,9 +17,9 @@ async function bancos2PUT ( req, res ) {
         err: ''
     }
     
-    Bancos2.Debug(false)
+    Tokens.Debug(false)
 
-    Bancos2.Update(tagId,body).then(ret=>{
+    Tokens.Update(tagId,body).then(ret=>{
         idMsg            = ret.rowCount ? 5 : 8
         msg              = MSG(idMsg)
         retorno.code     = msg.code
@@ -44,4 +44,4 @@ async function bancos2PUT ( req, res ) {
 
 }
 
-module.exports = bancos2PUT
+module.exports = tokensPUT

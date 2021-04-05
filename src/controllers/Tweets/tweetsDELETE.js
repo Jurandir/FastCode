@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API DELETE - 03/04/2021 21:59:01
+// Fast Code v1.0 - Entity API DELETE - 04/04/2021 22:11:34
 const Tweets = require('../../models/Tweets')
 const MSG = require('../../../common/helpers/message')
 

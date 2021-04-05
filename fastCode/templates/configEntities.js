@@ -12,7 +12,8 @@ const _Entities = {
 
 const _Entity = { 
         id: 0, 
-        name: '', 
+        name: '',
+        menu: '', 
         description: '', 
         tableName: '', 
         unit : '', 
@@ -37,6 +38,7 @@ const configEntities = (tableName,unit) => {
         Entities.dateUpdate = moment().format()
         Entity.id           = Entities.lastID
         Entity.name         = 'Register'+unit
+        Entity.menu         = unit
         Entity.tableName    = tableName
         Entity.description  = 'Cadstro de '+tableName
         Entity.unit         = unit

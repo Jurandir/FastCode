@@ -16,6 +16,36 @@ const dataStructurePG = async (table,schema) => {
         describe:'', 
         fk:null
     }
+
+    const tableComment = async () => {
+        let sql = `SELECT OBJ_DESCRIPTION('${schema}.${table}'::regclass)`
+        let resp = await sqlQuery(sql, [])
+        let ret   = (resp.rows[0]['obj_description'] || `Cadastro de ${table}` )
+        return ret        
+    }
+
+    const columnComment = async (column) => {
+        let sql = `SELECT pgd.description
+                   FROM pg_statio_all_tables st
+                   JOIN pg_description pgd ON pgd.objoid = st.relid
+                   JOIN information_schema.columns c ON 
+                        pgd.objsubid = c.ordinal_position::integer AND
+                        c.table_schema::name = st.schemaname AND 
+                        c.table_name::name = st.relname
+                   WHERE 
+                        c.table_schema = '${schema}' AND
+                        c.table_name   = '${table}' AND
+                        c.column_name  = '${column}'
+                    `
+        let resp = await sqlQuery(sql, [])
+        let rows = resp.rows
+        let desc = ''
+        if(rows.length>0){
+            desc = rows[0].description
+        }
+        let ret   = ( desc || capitalize(column) )
+        return ret    
+    }
     
     let sql = `SELECT DISTINCT cl.*,
               (SELECT MAX(tc.constraint_type) 
@@ -34,13 +64,13 @@ const dataStructurePG = async (table,schema) => {
         attr.idx      = item.ordinal_position
         attr.key      = item.constraint_type=='PRIMARY KEY' ? 1 : 0
         attr.name     = item.column_name
-        attr.caption  = capitalize(item.column_name)
+        attr.caption  = await columnComment(item.column_name)
         attr.type     = item.udt_name
         attr.len      = item.udt_name == 'varchar' ? item.character_maximum_length : 0
         attr.isnul    = (item.is_nullable == 'YES')
         attr.def      = item.column_default ? `"${item.column_default}"` : item.udt_name=='varchar' ? `''` : item.udt_name=='int4' ? 0 : null
         attr.inc      = item.column_default && attr.key > 0 ? true : false 
-        attr.describe = 'Tabela : '+item.column_name
+        attr.describe = attr.caption
         return attr
     }
 
@@ -56,6 +86,7 @@ const dataStructurePG = async (table,schema) => {
     }
 
     let ret = {
+        description: await tableComment(),
         keys: keys,
         inc: auto_increment,
         dbColumns: dbColumns

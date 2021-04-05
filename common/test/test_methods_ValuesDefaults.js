@@ -2,8 +2,20 @@
 
 const bancos2 = require('../../src/models/bancos2')
 
-let newBanco = bancos2.Defaults
+let newBanco1 = bancos2.Defaults
 
-console.log('Values Defaults :',newBanco)
+bancos2.ColumnsComments.then((newBanco2)=>{
+    console.log('Values Columns  :',newBanco2)
+})
 
-process.exit(0)
+bancos2.TableComment.then((newBanco3) =>{
+    console.log('Values Table    :',newBanco3)
+} )
+
+console.log('Values Defaults :',newBanco1)
+    
+
+
+setTimeout( ()=> process.exit(0),5000)
+
+return 0

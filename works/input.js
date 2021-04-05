@@ -3,29 +3,32 @@
 let clickShowTela
 
 ((win,doc)=>{
-    let title_tela      = doc.getElementById("title_tela")
-    let title_pesquisa  = doc.getElementById("title_pesquisa")
-    let mySidenav       = doc.getElementById("mySidenav")
-    let div_master      = doc.getElementById("div_master")
-    let div_tabela      = doc.getElementById("div_tabela") 
-    let div_tela        = doc.getElementById("div_tela") 
-    let div_tela_campos = doc.getElementById("div_tela_campos")
-    let btn_novo        = doc.getElementById("btn_novo")
-    let btn_seek        = doc.getElementById("btn_seek")
-    let btn_sair        = doc.getElementById("btn_sair")
-    let head_table      = doc.getElementById("head_table")
-    let lines_table     = doc.getElementById("lines_table")
-    let body_table      = doc.getElementById("body_table")
-    let btn_tela_cancel = doc.getElementById("btn_tela_cancel")
-    let entidades       = []
-    let fields          = []
-    let fieldsTypes     = []
-    let data_api        = []
-    let field_ID        = 'id'
-    let url_types       = ''
-    let url_dados       = ''
-    let flag_debug      = false
-    let id_tela         = -1
+    let title_tela       = doc.getElementById("title_tela")
+    let title_pesquisa   = doc.getElementById("title_pesquisa")
+    let mySidenav        = doc.getElementById("mySidenav")
+    let div_master       = doc.getElementById("div_master")
+    let div_tabela       = doc.getElementById("div_tabela") 
+    let div_tela         = doc.getElementById("div_tela") 
+    let div_tela_campos  = doc.getElementById("div_tela_campos")
+    let btn_novo         = doc.getElementById("btn_novo")
+    let btn_seek         = doc.getElementById("btn_seek")
+    let btn_sair         = doc.getElementById("btn_sair")
+    let head_table       = doc.getElementById("head_table")
+    let lines_table      = doc.getElementById("lines_table")
+    let body_table       = doc.getElementById("body_table")
+    let btn_tela_cancel  = doc.getElementById("btn_tela_cancel")
+    let btn_save         = doc.getElementById("btn_save")
+    let entidades        = []
+    let fields           = []
+    let fieldsTypes      = []
+    let fieldsReadOnly   = []
+    let data_api         = []
+    let field_ID         = 'id'
+    let url_types        = ''
+    let url_dados        = ''
+    let url_list         = '/api/list'
+    let flag_debug       = false
+    let id_tela          = -1
 
     head_table.innerHTML  = ''
     body_table.innerHTML  = ''
@@ -35,12 +38,18 @@ let clickShowTela
     btn_novo.addEventListener("click", btn_novo_exec )
     btn_seek.addEventListener("click", btn_seek_exec )
     btn_sair.addEventListener("click", btn_sair_exec )
+    btn_save.addEventListener("click", btn_save_exec )
     btn_tela_cancel.addEventListener("click", btn_cancel_exec )
 
     async function loadEntidades() {
-        entidades = []
-        entidades.push({nome:'Bancos', descricao:'Cadastro de Bancos', apiTypes:'/api/bancos2/types', apiDados:'/api/bancos2' })
-        entidades.push({nome:'Tweets', descricao:'Cadastro de Tweets', apiTypes:'/api/tweets/types', apiDados:'/api/tweets' })
+        await fetch(url_list, { method: 'GET' })
+        .then(response => response.json())
+        .then(ret => {
+            if(flag_debug) { console.log('loadEntidades:',ret) }
+            entidades = ret.data
+         })
+        .catch(err => console.log('(loadEntidades) Err:',err.message))
+        return entidades  
     }
 
     function showScreen(tela_id){
@@ -82,7 +91,7 @@ let clickShowTela
         div.innerHTML=''
     }
 
-    function criaElementosMenu(){
+    function criaElementosMenu(itens){
         let exit_menu = doc.createElement('a');
         exit_menu.setAttribute('class',`closebtn`)
         exit_menu.setAttribute('href',"javascript:void(0)")
@@ -93,7 +102,7 @@ let clickShowTela
         let list  = []
         let refer = []
 
-        entidades.forEach(item=>{
+        itens.forEach(item=>{
             list.push(item.nome)
             refer.push('#')
         })
@@ -169,7 +178,8 @@ let clickShowTela
     function btn_novo_exec() {
         if(flag_debug) { console.log('Clicou NOVO') }    
         show_div( div_tela )  
-        text_acao_tela('Inclusão') 
+        text_acao_tela('Inclusão')
+        btn_save.innerHTML = 'Inclui' 
     }
 
     function btn_seek_exec() {
@@ -184,6 +194,10 @@ let clickShowTela
         hide_div_master()
         id_tela = -1
         limpaElementosDIV()
+    }
+
+    function btn_save_exec() {
+        console.log('Clicou SAVE :',btn_save.innerHTML)   
     }
 
     function btn_cancel_exec() {
@@ -209,6 +223,7 @@ let clickShowTela
         if(flag_debug) { console.log('actionsMostrarExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Cadastro') 
+        btn_save.innerHTML = 'OK'
         getDadosParaElementos(id,idx,false) 
     }
 
@@ -216,6 +231,7 @@ let clickShowTela
         if(flag_debug) { console.log('actionsEditarExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Alteração')
+        btn_save.innerHTML = 'Altera'
         getDadosParaElementos(id,idx,true) 
      }
  
@@ -223,6 +239,7 @@ let clickShowTela
         if(flag_debug) { console.log('actionsExcluirExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Exclusão') 
+        btn_save.innerHTML = 'Exclui'
         getDadosParaElementos(id,idx,false) 
      }
 
@@ -232,6 +249,9 @@ let clickShowTela
          fields.forEach((field,idx)=>{
              let elem = doc.getElementById(`Tela_${field}`)
              let tipo = fieldsTypes[idx]
+             let readOnly  = edit ? fieldsReadOnly[idx] : true
+             elem.readOnly = readOnly
+
              elem.value = edit ? formataDadoElemento(tipo,reg[field],elem) : formataShowElemento(tipo,reg[field],elem)
          })
      }
@@ -275,7 +295,6 @@ let clickShowTela
          }
         return ret
      }
-
 
      function createElementInputInt(name,caption,value,col_md,readOnly,len) {
         let type = 'number'
@@ -465,6 +484,7 @@ let clickShowTela
     
                 let func = criaElementoTipo(tipo)
                 let elem = func(field,caption,'',col_len,readOnly,len)
+                fieldsReadOnly.push(readOnly)
                 div_tela_campos.appendChild(elem)
             })
         })
@@ -515,8 +535,8 @@ let clickShowTela
     }
 
     // Start
-    loadEntidades().then(ok=>{
-        criaElementosMenu()    
+    loadEntidades().then(item=>{
+        criaElementosMenu(item)    
     })
 
 })(window,document)

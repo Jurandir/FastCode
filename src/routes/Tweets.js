@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Routes - 03/04/2021 21:59:01
+    // Fast Code v1.0 - Routes - 04/04/2021 22:11:34
     const express      = require('express')
     const router       = express.Router()
     const validaToken  = require('../auth/verifyToken')
