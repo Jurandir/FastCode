@@ -30,10 +30,10 @@
     </div>
   </header>>
 
-  <main id="main">
+  <main id="main mx-0 my-0">
 
     <div class="container" id="div_master" style="display:none">
-      <div class="jumbotron pb-2 pt-2" style="margin-top: 2rem;">
+      <div class="jumbotron pb-2 pt-2 mb-1" style="margin-top: 2rem;">
         <h1 id="title_tela" style="text-align: center; color: rgb(34, 27, 95);">Cadastro de Bancos</h1>
 
         <div class="row">
@@ -65,7 +65,7 @@
     </div>
 
     <div class="container" id="div_tabela" style="display:none">
-      <table class="table table-sm table-hover table-dark">
+      <table class="table table-sm table-hover mb-0 table-dark">
         <thead>
           <tr id="head_table">
           </tr>
@@ -75,6 +75,20 @@
           </tr>
         </tbody>
       </table>
+      <div id='div_paginate' class="row">
+        <div class="col-md-12">
+          <ul class="pagination pagination-sm justify-content-end mb-0">
+            <li class="page-item disabled"><span class="page-link mt-1">Regs: 10000</span></li>
+            <li class="page-item disabled"><span class="page-link mt-1">Pags: 10000</span></li>
+            <li class="page-item"><i class="bi bi-skip-start-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item"><i class="bi bi-skip-backward-fill     px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item disabled"><span class="page-link mx-1 mt-1">999</span></li>
+            <li class="page-item"><i class="bi bi-skip-forward-fill    px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item"><i class="bi bi-skip-end-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
     <div class="container mb-2" id="div_tela" style="display:none">
