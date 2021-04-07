@@ -3,21 +3,28 @@
 let clickShowTela
 
 ((win,doc)=>{
-    let title_tela       = doc.getElementById("title_tela")
-    let title_pesquisa   = doc.getElementById("title_pesquisa")
-    let mySidenav        = doc.getElementById("mySidenav")
-    let div_master       = doc.getElementById("div_master")
-    let div_tabela       = doc.getElementById("div_tabela") 
-    let div_tela         = doc.getElementById("div_tela") 
-    let div_tela_campos  = doc.getElementById("div_tela_campos")
-    let btn_novo         = doc.getElementById("btn_novo")
-    let btn_seek         = doc.getElementById("btn_seek")
-    let btn_sair         = doc.getElementById("btn_sair")
-    let head_table       = doc.getElementById("head_table")
-    let lines_table      = doc.getElementById("lines_table")
-    let body_table       = doc.getElementById("body_table")
-    let btn_tela_cancel  = doc.getElementById("btn_tela_cancel")
-    let btn_save         = doc.getElementById("btn_save")
+    let title_tela        = doc.getElementById("title_tela")
+    let title_pesquisa    = doc.getElementById("title_pesquisa")
+    let mySidenav         = doc.getElementById("mySidenav")
+    let div_master        = doc.getElementById("div_master")
+    let div_tabela        = doc.getElementById("div_tabela") 
+    let div_tela          = doc.getElementById("div_tela") 
+    let div_tela_campos   = doc.getElementById("div_tela_campos")
+    let btn_novo          = doc.getElementById("btn_novo")
+    let btn_seek          = doc.getElementById("btn_seek")
+    let btn_sair          = doc.getElementById("btn_sair")
+    let head_table        = doc.getElementById("head_table")
+    let lines_table       = doc.getElementById("lines_table")
+    let body_table        = doc.getElementById("body_table")
+    let btn_tela_cancel   = doc.getElementById("btn_tela_cancel")
+    let btn_save          = doc.getElementById("btn_save")
+    let paginate_Regs     = doc.getElementById("paginate_Regs")
+    let paginate_Pags     = doc.getElementById("paginate_Pags")
+    let paginate_Page     = doc.getElementById("paginate_Page")
+    let paginate_Inicio   = doc.getElementById("paginate_Inicio")
+    let paginate_Anterior = doc.getElementById("paginate_Anterior")
+    let paginate_Proximo  = doc.getElementById("paginate_Proximo")
+    let paginate_Ultimo   = doc.getElementById("paginate_Ultimo")
     let entidades        = []
     let fields           = []
     let fieldsTypes      = []
@@ -29,6 +36,11 @@ let clickShowTela
     let url_list         = '/api/list'
     let flag_debug       = false
     let id_tela          = -1
+    let pag_rows    = 120
+    let pag_pages   = 10
+    let pag_page    = 1
+    let pag_size    = 12
+
 
     head_table.innerHTML  = ''
     body_table.innerHTML  = ''
@@ -39,7 +51,42 @@ let clickShowTela
     btn_seek.addEventListener("click", btn_seek_exec )
     btn_sair.addEventListener("click", btn_sair_exec )
     btn_save.addEventListener("click", btn_save_exec )
-    btn_tela_cancel.addEventListener("click", btn_cancel_exec )
+    btn_tela_cancel.addEventListener("click"  , btn_cancel_exec )
+    paginate_Inicio.addEventListener("click"  , pag_Inicio_click )
+    paginate_Anterior.addEventListener("click", pag_Anterior_click )
+    paginate_Proximo.addEventListener("click" , pag_Proximo_click )
+    paginate_Ultimo.addEventListener("click"  , pag_Ultimo_click )
+
+
+    function pag_Inicio_click() {
+        console.log('Pg. Inicio')
+        pag_page=1
+        show_paginate()
+    }
+    function pag_Anterior_click() {
+        console.log('Pg. Anterior')
+        pag_page--
+        show_paginate()
+    }
+    function pag_Proximo_click() {
+        console.log('Pg. Proxima')
+        pag_page++
+        show_paginate()
+    }
+    function pag_Ultimo_click() {
+        console.log('Pg. Final')
+        pag_page=pag_pages
+        show_paginate()
+    }
+
+    function show_paginate() {
+        console.log(pag_rows,pag_pages,pag_page)
+        if(pag_page===0) { pag_page = 1 }
+        if(pag_page>pag_pages) { pag_page = pag_pages }
+        paginate_Regs.innerHTML = 'Regs: '+pag_rows
+        paginate_Pags.innerHTML = 'Pags: '+pag_pages
+        paginate_Page.innerHTML = pag_page
+    }
 
     async function loadEntidades() {
         await fetch(url_list, { method: 'GET' })

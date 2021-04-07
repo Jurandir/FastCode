@@ -30,7 +30,7 @@
     </div>
   </header>>
 
-  <main id="main mx-0 my-0">
+  <main id="main" class="mx-0 my-0">
 
     <div class="container" id="div_master" style="display:none">
       <div class="jumbotron pb-2 pt-2 mb-1" style="margin-top: 2rem;">
@@ -78,13 +78,13 @@
       <div id='div_paginate' class="row">
         <div class="col-md-12">
           <ul class="pagination pagination-sm justify-content-end mb-0">
-            <li class="page-item disabled"><span class="page-link mt-1">Regs: 10000</span></li>
-            <li class="page-item disabled"><span class="page-link mt-1">Pags: 10000</span></li>
-            <li class="page-item"><i class="bi bi-skip-start-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
-            <li class="page-item"><i class="bi bi-skip-backward-fill     px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
-            <li class="page-item disabled"><span class="page-link mx-1 mt-1">999</span></li>
-            <li class="page-item"><i class="bi bi-skip-forward-fill    px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
-            <li class="page-item"><i class="bi bi-skip-end-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item disabled"><span id="paginate_Regs" class="page-link mt-1">Regs: 10000</span></li>
+            <li class="page-item disabled"><span id="paginate_Pags" class="page-link mt-1">Pags: 10000</span></li>
+            <li class="page-item"><i id="paginate_Inicio" class="bi bi-skip-start-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item"><i id="paginate_Anterior" class="bi bi-skip-backward-fill     px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item disabled"><span id="paginate_Page" class="page-link mx-1 mt-1">999</span></li>
+            <li class="page-item"><i id="paginate_Proximo" class="bi bi-skip-forward-fill    px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
+            <li class="page-item"><i id="paginate_Ultimo" class="bi bi-skip-end-circle-fill px-0 mx-1 py-0 my-0" style="font-size: 1.6rem; color: rgb(42, 55, 80); cursor: pointer;"></i></li>
           </ul>
         </div>
       </div>
