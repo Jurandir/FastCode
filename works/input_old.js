@@ -39,7 +39,7 @@ let clickShowTela
     let pag_rows    = 120
     let pag_pages   = 10
     let pag_page    = 1
-    let pag_size    = 5 // 12
+    let pag_size    = 12
 
 
     head_table.innerHTML  = ''
@@ -539,8 +539,7 @@ let clickShowTela
      }
      
     function getDadosEntidades() {
-        let url_page = `${url_dados}/page?page=${pag_page}&size=${pag_size}`
-        fetch(url_page, { method: 'GET' })
+        fetch(url_dados, { method: 'GET' })
         .then(response => response.json())
         .then(ret => { 
             data_api  = ret.data
