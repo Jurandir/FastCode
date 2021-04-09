@@ -23,7 +23,7 @@ async function sqlPaginate(sql,sqlCount,pg,debug) {
     res.rows       = data.rows
     res.Lines   = data.rowCount
 
-    res.Pages = Math.trunc(res.Total / res.PageSize)+1
+    res.Pages = Math.trunc((res.Total-1) / res.PageSize)+1
 
     return res
 }

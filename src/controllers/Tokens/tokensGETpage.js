@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API GET Page - 04/04/2021 22:14:25
+// Fast Code v1.0 - Entity API GET Page - 09/04/2021 00:00:38
 const Tokens = require('../../models/Tokens')
 const MSG = require('../../../common/helpers/message')
 
@@ -16,6 +16,8 @@ async function tokensGETpage ( req, res ) {
         params: condition,
         page: pagina,
         size: linhas,
+        total: 0,
+        pages: 0,        
         code: 0,
         err: ''
     }
@@ -29,6 +31,8 @@ async function tokensGETpage ( req, res ) {
         retorno.success = msg.success
         retorno.data    = ret.rows
         retorno.message = msg.message
+        retorno.total   = ret.Total
+        retorno.pages   = ret.Pages
 
         res.json(retorno).status(retorno.code || 200)
 

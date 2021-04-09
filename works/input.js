@@ -61,28 +61,27 @@ let clickShowTela
     function pag_Inicio_click() {
         console.log('Pg. Inicio')
         pag_page=1
-        show_paginate()
+        getDadosEntidades()
     }
     function pag_Anterior_click() {
         console.log('Pg. Anterior')
         pag_page--
-        show_paginate()
+        if(pag_page===0) { pag_page = 1 }
+        getDadosEntidades()
     }
     function pag_Proximo_click() {
         console.log('Pg. Proxima')
         pag_page++
-        show_paginate()
+        if(pag_page>pag_pages) { pag_page = pag_pages }
+        getDadosEntidades()
     }
     function pag_Ultimo_click() {
         console.log('Pg. Final')
         pag_page=pag_pages
-        show_paginate()
+        getDadosEntidades()
     }
 
     function show_paginate() {
-        console.log(pag_rows,pag_pages,pag_page)
-        if(pag_page===0) { pag_page = 1 }
-        if(pag_page>pag_pages) { pag_page = pag_pages }
         paginate_Regs.innerHTML = 'Regs: '+pag_rows
         paginate_Pags.innerHTML = 'Pags: '+pag_pages
         paginate_Page.innerHTML = pag_page
@@ -545,6 +544,8 @@ let clickShowTela
         .then(ret => { 
             data_api  = ret.data
             let itens = data_api
+
+            body_table.innerHTML = ''
     
             if(flag_debug) { console.log('itens:',itens) }
     
@@ -576,8 +577,16 @@ let clickShowTela
     
                 let elemIconExcluir = criaElementoBtnExcluir(key_ID,item)
                 butons.appendChild(elemIconExcluir)
-    
+   
             }
+
+            pag_page  = ret.page
+            pag_size  = ret.size
+            pag_pages = ret.pages
+            pag_rows  = ret.total
+
+            show_paginate()
+
         })
         .catch(err => console.log('Err:',err.message))    
     }

@@ -1,4 +1,4 @@
-// Fast Code v1.0 - Entity API GET Types - 04/04/2021 22:11:06
+// Fast Code v1.0 - Entity API GET Types - 09/04/2021 00:00:56
 const Bancos2 = require('../../models/Bancos2')
 
 async function bancos2GETtypes ( req, res ) {

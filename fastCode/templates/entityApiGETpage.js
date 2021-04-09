@@ -23,6 +23,8 @@ async function ${unit}GETpage ( req, res ) {
         params: condition,
         page: pagina,
         size: linhas,
+        total: 0,
+        pages: 0,        
         code: 0,
         err: ''
     }
@@ -36,6 +38,8 @@ async function ${unit}GETpage ( req, res ) {
         retorno.success = msg.success
         retorno.data    = ret.rows
         retorno.message = msg.message
+        retorno.total   = ret.Total
+        retorno.pages   = ret.Pages
 
         res.json(retorno).status(retorno.code || 200)
 

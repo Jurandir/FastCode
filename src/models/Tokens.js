@@ -1,5 +1,5 @@
 
-    // Fast Code v1.0 - Entities -  04/04/2021 22:14:25
+    // Fast Code v1.0 - Entities -  09/04/2021 00:00:38
     const methods  = require('../../common/database/methods')
     
     const TABLE_NAME  = 'public.tokens'
