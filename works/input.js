@@ -36,10 +36,10 @@ let clickShowTela
     let url_list         = '/api/list'
     let flag_debug       = false
     let id_tela          = -1
-    let pag_rows    = 120
-    let pag_pages   = 10
-    let pag_page    = 1
-    let pag_size    = 5 // 12
+    let pag_rows         = 0
+    let pag_pages        = 0
+    let pag_page         = 0
+    let pag_size         = 5 // 12
 
 
     head_table.innerHTML  = ''

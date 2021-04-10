@@ -13,10 +13,14 @@ const _Entities = {
 const _Entity = { 
         id: 0, 
         name: '',
-        menu: '', 
+        menu: '',                    // Descrição no menu 
         description: '', 
         tableName: '', 
-        unit : '', 
+        unit : '',
+        paginate: 12,                // Quantidade de linhas por pagina nas tabelas HTML
+        seekCode: null,              // Campo na tabela usado para pesquisar um registro
+        seekDescription: null,       // Campo na tabela para pesquisar por descrição
+        sekkDate: null,              // Campo na tabela para pesquisar por periodo
         allows_seek: true,
         allows_types: true,
         allows_insert: true, 
