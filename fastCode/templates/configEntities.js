@@ -21,6 +21,7 @@ const _Entity = {
         seekCode: null,              // Campo na tabela usado para pesquisar um registro
         seekDescription: null,       // Campo na tabela para pesquisar por descrição
         sekkDate: null,              // Campo na tabela para pesquisar por periodo
+        fieldFocus: null,            // Campo que recebe o foco na inclusão/Alteração
         allows_seek: true,
         allows_types: true,
         allows_insert: true, 

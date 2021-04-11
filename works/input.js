@@ -27,6 +27,7 @@ let clickShowTela
     let paginate_Ultimo   = doc.getElementById("paginate_Ultimo")
     let entidades        = []
     let fields           = []
+    let fieldFocus       = ''
     let fieldsTypes      = []
     let fieldsReadOnly   = []
     let data_api         = []
@@ -38,8 +39,8 @@ let clickShowTela
     let id_tela          = -1
     let pag_rows         = 0
     let pag_pages        = 0
-    let pag_page         = 0
-    let pag_size         = 5 // 12
+    let pag_page         = 1
+    let pag_size         = 12
 
 
     head_table.innerHTML  = ''
@@ -51,6 +52,7 @@ let clickShowTela
     btn_seek.addEventListener("click", btn_seek_exec )
     btn_sair.addEventListener("click", btn_sair_exec )
     btn_save.addEventListener("click", btn_save_exec )
+
     btn_tela_cancel.addEventListener("click"  , btn_cancel_exec )
     paginate_Inicio.addEventListener("click"  , pag_Inicio_click )
     paginate_Anterior.addEventListener("click", pag_Anterior_click )
@@ -99,6 +101,9 @@ let clickShowTela
     }
 
     function showScreen(tela_id){
+        btn_sair_exec()
+        pag_size      = entidades[tela_id].paginate
+        fieldFocus    = entidades[tela_id].fieldFocus || ''
 
         if(id_tela == tela_id) {
             return 0
@@ -149,7 +154,7 @@ let clickShowTela
         let refer = []
 
         itens.forEach(item=>{
-            list.push(item.nome)
+            list.push(item.menu)
             refer.push('#')
         })
 
@@ -221,19 +226,25 @@ let clickShowTela
         div.style.display = 'block'  
     }
 
+    // btn_novo
     function btn_novo_exec() {
         if(flag_debug) { console.log('Clicou NOVO') }    
         show_div( div_tela )  
         text_acao_tela('Inclusão')
-        btn_save.innerHTML = 'Inclui' 
+        btn_save.innerHTML = 'Inclui'
+        setNullParaElementos() 
+        if(flag_debug) { console.log('FieldFocus:',fieldFocus) }
+        setFocus(fieldFocus)
     }
 
+    // btn_seek
     function btn_seek_exec() {
         if(flag_debug) { console.log('Clicou SEEK') }   
         show_div( div_tabela )  
         text_acao_tela('Pesquisa') 
     }
 
+    // btn_sair
     function btn_sair_exec() {
         if(flag_debug) { console.log('Clicou SAIR') }   
         hide_all_div()  
@@ -242,10 +253,12 @@ let clickShowTela
         limpaElementosDIV()
     }
 
+    // btn_salvar
     function btn_save_exec() {
         console.log('Clicou SAVE :',btn_save.innerHTML)   
     }
 
+    // btn_cancelar
     function btn_cancel_exec() {
         if(flag_debug) { console.log('Clicou CANCELAR') }   
         hide_all_div()  
@@ -265,42 +278,71 @@ let clickShowTela
         return child
     }
 
+    //btn_mostrar
     function actionsMostrarExec(id,idx) {
         if(flag_debug) { console.log('actionsMostrarExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Cadastro') 
         btn_save.innerHTML = 'OK'
         getDadosParaElementos(id,idx,false) 
+        btn_tela_cancel.focus()
     }
 
+    // btn_editar
     function actionsEditarExec(id,idx) {
         if(flag_debug) { console.log('actionsEditarExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Alteração')
         btn_save.innerHTML = 'Altera'
         getDadosParaElementos(id,idx,true) 
+        setFocus(fieldFocus)
      }
  
+     // btn_excluir
      function actionsExcluirExec(id,idx) {
         if(flag_debug) { console.log('actionsExcluirExec ID:',id,idx) }
         show_div( div_tela )  
         text_acao_tela('Exclusão') 
         btn_save.innerHTML = 'Exclui'
         getDadosParaElementos(id,idx,false) 
+        btn_tela_cancel.focus()
      }
 
      function getDadosParaElementos(id,idx,edit) {
          let reg = data_api[idx]
-         console.log('Registro Select: ID:',id,', IDX:',idx,', Dados:',reg)
+         if(flag_debug) { console.log('Registro Select: ID:',id,', IDX:',idx,', Dados:',reg ) }
          fields.forEach((field,idx)=>{
              let elem = doc.getElementById(`Tela_${field}`)
              let tipo = fieldsTypes[idx]
              let readOnly  = edit ? fieldsReadOnly[idx] : true
              elem.readOnly = readOnly
 
+             if(flag_debug) { console.log(field,'Tipo:',tipo) }
+
              elem.value = edit ? formataDadoElemento(tipo,reg[field],elem) : formataShowElemento(tipo,reg[field],elem)
          })
      }
+
+     function setNullParaElementos() {
+        if(flag_debug) { console.log('Registro Novo: setNullParaElementos()') }
+        fields.forEach((field,idx)=>{
+            let elem = doc.getElementById(`Tela_${field}`)
+            let tipo = fieldsTypes[idx]
+            let readOnly  = fieldsReadOnly[idx]
+            elem.readOnly = readOnly
+            elem.value    = formataDadoElemento(tipo,null,elem)
+        })
+    }
+
+    function setFocus(field) {
+        let nameElem = `Tela_${field}`
+        let elem = doc.getElementById(nameElem)
+        if(!elem) {
+            console.error(`(common/config/entities.json) - Campo "${field}" atribuído para fieldFocus, não existe !!!`)
+        } else {
+            elem.focus()
+        }
+    }
 
      function formataDadoElemento(tp,valor,elem){
         let tipo = tp.substr(0,4)
@@ -309,11 +351,11 @@ let clickShowTela
         console.log('Tipo:',tipo,tp)
 
         if(tipo=='time' || tipo=='date') {
-            ret = valor.substr(0,19)
+            ret = valor ? valor.substr(0,19) : null
          } else 
          if(tipo=='nume') {
             elem.setAttribute('type','number')
-            ret =  parseFloat(valor)
+            ret =  valor ? parseFloat(valor) : 0
          } else {
             ret = valor
          }
@@ -491,6 +533,7 @@ let clickShowTela
                     fields.push(def)
                 }
             }
+            fieldFocus = fieldFocus ? fieldFocus : fields[1]
     
             field_ID = dados.key
             if(flag_debug) { 

@@ -6,7 +6,10 @@ async function entitiesList ( req, res ) {
 
     let data = []
     entities.list.forEach(list=>{
-        data.push({nome: list.menu , descricao: list.description, apiTypes:`/api/${list.tableName}/types`, apiDados:`/api/${list.tableName}` })
+        let cfg = {...list}
+        cfg.apiTypes  = `/api/${list.tableName}/types`, 
+        cfg.apiDados  = `/api/${list.tableName}`
+        data.push( cfg )
     })
 
     try {
