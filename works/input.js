@@ -3,44 +3,48 @@
 let clickShowTela
 
 ((win,doc)=>{
-    let title_tela        = doc.getElementById("title_tela")
-    let title_pesquisa    = doc.getElementById("title_pesquisa")
-    let mySidenav         = doc.getElementById("mySidenav")
-    let div_master        = doc.getElementById("div_master")
-    let div_tabela        = doc.getElementById("div_tabela") 
-    let div_tela          = doc.getElementById("div_tela") 
-    let div_tela_campos   = doc.getElementById("div_tela_campos")
-    let btn_novo          = doc.getElementById("btn_novo")
-    let btn_seek          = doc.getElementById("btn_seek")
-    let btn_sair          = doc.getElementById("btn_sair")
-    let head_table        = doc.getElementById("head_table")
-    let lines_table       = doc.getElementById("lines_table")
-    let body_table        = doc.getElementById("body_table")
-    let btn_tela_cancel   = doc.getElementById("btn_tela_cancel")
-    let btn_save          = doc.getElementById("btn_save")
-    let paginate_Regs     = doc.getElementById("paginate_Regs")
-    let paginate_Pags     = doc.getElementById("paginate_Pags")
-    let paginate_Page     = doc.getElementById("paginate_Page")
-    let paginate_Inicio   = doc.getElementById("paginate_Inicio")
-    let paginate_Anterior = doc.getElementById("paginate_Anterior")
-    let paginate_Proximo  = doc.getElementById("paginate_Proximo")
-    let paginate_Ultimo   = doc.getElementById("paginate_Ultimo")
-    let entidades        = []
-    let fields           = []
-    let fieldFocus       = ''
-    let fieldsTypes      = []
-    let fieldsReadOnly   = []
-    let data_api         = []
-    let field_ID         = 'id'
-    let url_types        = ''
-    let url_dados        = ''
-    let url_list         = '/api/list'
-    let flag_debug       = false
-    let id_tela          = -1
-    let pag_rows         = 0
-    let pag_pages        = 0
-    let pag_page         = 1
-    let pag_size         = 12
+    let title_tela         = doc.getElementById("title_tela")
+    let title_pesquisa     = doc.getElementById("title_pesquisa")
+    let modalConfirmaTitle = doc.getElementById("modalConfirmaTitle")
+    let modalConfirmaBody  = doc.getElementById("modalConfirmaBody")
+    let btnModalConfirma   = doc.getElementById("btnModalConfirma")
+    let mySidenav          = doc.getElementById("mySidenav")
+    let div_master         = doc.getElementById("div_master")
+    let div_tabela         = doc.getElementById("div_tabela") 
+    let div_tela           = doc.getElementById("div_tela") 
+    let div_tela_campos    = doc.getElementById("div_tela_campos")
+    let btn_novo           = doc.getElementById("btn_novo")
+    let btn_seek           = doc.getElementById("btn_seek")
+    let btn_sair           = doc.getElementById("btn_sair")
+    let head_table         = doc.getElementById("head_table")
+    let lines_table        = doc.getElementById("lines_table")
+    let body_table         = doc.getElementById("body_table")
+    let btn_tela_cancel    = doc.getElementById("btn_tela_cancel")
+    let btn_save           = doc.getElementById("btn_save")
+    let paginate_Regs      = doc.getElementById("paginate_Regs")
+    let paginate_Pags      = doc.getElementById("paginate_Pags")
+    let paginate_Page      = doc.getElementById("paginate_Page")
+    let paginate_Inicio    = doc.getElementById("paginate_Inicio")
+    let paginate_Anterior  = doc.getElementById("paginate_Anterior")
+    let paginate_Proximo   = doc.getElementById("paginate_Proximo")
+    let paginate_Ultimo    = doc.getElementById("paginate_Ultimo")
+    let entidades         = []
+    let fields            = []
+    let fieldFocus        = ''
+    let fieldsTypes       = []
+    let fieldsReadOnly    = []
+    let data_api          = []
+    let field_ID          = 'id'
+    let url_types         = ''
+    let url_dados         = ''
+    let url_list          = '/api/list'
+    let flag_debug        = false
+    let fn_modalConfirma  = null
+    let id_tela           = -1
+    let pag_rows          = 0
+    let pag_pages         = 0
+    let pag_page          = 1
+    let pag_size          = 12
 
 
     head_table.innerHTML  = ''
@@ -53,6 +57,7 @@ let clickShowTela
     btn_sair.addEventListener("click", btn_sair_exec )
     btn_save.addEventListener("click", btn_save_exec )
 
+    btnModalConfirma.addEventListener("click" , btn_confirma_exec )
     btn_tela_cancel.addEventListener("click"  , btn_cancel_exec )
     paginate_Inicio.addEventListener("click"  , pag_Inicio_click )
     paginate_Anterior.addEventListener("click", pag_Anterior_click )
@@ -181,7 +186,7 @@ let clickShowTela
         let id = `Mostar_${item}`
         let classe = "bi bi-file-earmark-text"
         let estilo = "font-size: 1.5rem; color: cornflowerblue; margin-left: 5px; cursor: pointer;"
-        let elemento = criaElemento('i',id, classe, estilo)
+        let elemento = criaElemento('i',id, classe, estilo,id)
         elemento.addEventListener("click", function(){actionsMostrarExec(item,idx)}, false);
         return elemento
     }
@@ -190,7 +195,7 @@ let clickShowTela
         let id = `Editar_${item}` 
         let classe = "bi bi-pencil"
         let estilo = "font-size: 1.5rem; color: rgb(212, 237, 100); margin-left: 5px; cursor: pointer;"
-        let elemento = criaElemento('i',id, classe, estilo)
+        let elemento = criaElemento('i',id, classe, estilo,id)
         elemento.addEventListener("click", function(){actionsEditarExec(item,idx)}, false);
         return elemento
     }
@@ -199,16 +204,20 @@ let clickShowTela
         let id =  `Excluir_${item}`
         let classe = "bi bi-trash"
         let estilo = "font-size: 1.5rem; color: rgb(235, 65, 65); margin-left: 5px; cursor: pointer;"
-        let elemento = criaElemento('i',id, classe, estilo)
+        let elemento = criaElemento('i',id, classe, estilo,id)
         elemento.addEventListener("click", function(){actionsExcluirExec(item,idx)}, false);
         return elemento
     }
 
-    function criaElemento(tag,id,classe,estilo) {
+    function criaElemento(tag,id,classe,estilo,title) {
         let elemento = doc.createElement(tag)
-        elemento.setAttribute('id',id)
+        elemento.setAttribute('id'   ,id)
         elemento.setAttribute('class',classe)
         elemento.setAttribute('style',estilo)
+        elemento.setAttribute('title',"")
+        elemento.setAttribute('data-toggle','tooltip')
+        elemento.setAttribute('data-original-title',title)
+        elemento.setAttribute('title',title)
         return elemento
     }
 
@@ -239,7 +248,7 @@ let clickShowTela
 
     // btn_seek
     function btn_seek_exec() {
-        if(flag_debug) { console.log('Clicou SEEK') }   
+        if(flag_debug) { console.log('Clicou SEEK') }
         show_div( div_tabela )  
         text_acao_tela('Pesquisa') 
     }
@@ -255,7 +264,15 @@ let clickShowTela
 
     // btn_salvar
     function btn_save_exec() {
-        console.log('Clicou SAVE :',btn_save.innerHTML)   
+        let acao = doc.getElementById("text_acao_tela").innerHTML
+        let fn_acao
+        console.log('Clicou SAVE :',btn_save.innerHTML,acao)  
+
+        fn_acao =   (acao === 'Inclusão' ) ? incluirDados :
+                    (acao === 'Alteração') ? alterarDados :
+                    (acao === 'Exclusão' ) ? excluirDados : ()=>{ console.log('OK do modal:',acao) }
+
+        modal_confirmacao_show('Confirmação:',`Confirma realizar a ${acao} ?`, fn_acao  )
     }
 
     // btn_cancelar
@@ -263,6 +280,35 @@ let clickShowTela
         if(flag_debug) { console.log('Clicou CANCELAR') }   
         hide_all_div()  
         text_acao_tela('Cancelar') 
+    }
+
+    // btn_confirma_exec
+    function btn_confirma_exec() {
+        if(fn_modalConfirma) {
+            fn_modalConfirma()
+        } else {
+            console.error(`(btn_confirma_exec) - função não atribuida a "fn_modalConfirma" !!!`)
+        }
+    }
+
+    // Modal Confirmação
+    function modal_confirmacao_show(title, message, fn_confirma ) {
+        modalConfirmaTitle.innerHTML = title
+        modalConfirmaBody.innerHTML = message 
+        fn_modalConfirma = fn_confirma
+        $('#modalConfirma').modal('show') // jQuery chama MODAL
+    }
+
+    function incluirDados() {
+        console.log('incluirDados')
+    }
+
+    function excluirDados() {
+        console.log('excluirDados')
+    }
+
+    function alterarDados() {
+        console.log('alterarDados')
     }
 
     function append(element,tag, str) {
@@ -622,6 +668,8 @@ let clickShowTela
                 butons.appendChild(elemIconExcluir)
    
             }
+
+            $('[data-toggle="tooltip"]').tooltip() // Aplica visualização do hint tipo tooltip
 
             pag_page  = ret.page
             pag_size  = ret.size
