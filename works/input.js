@@ -4,6 +4,7 @@ let clickShowTela
 
 ((win,doc)=>{
     let title_tela         = doc.getElementById("title_tela")
+    let form               = doc.getElementById("form")
     let title_pesquisa     = doc.getElementById("title_pesquisa")
     let modalConfirmaTitle = doc.getElementById("modalConfirmaTitle")
     let modalConfirmaBody  = doc.getElementById("modalConfirmaBody")
@@ -64,6 +65,44 @@ let clickShowTela
     paginate_Proximo.addEventListener("click" , pag_Proximo_click )
     paginate_Ultimo.addEventListener("click"  , pag_Ultimo_click )
 
+    form.addEventListener("submit",formSubmit)
+
+    // https://gomakethings.com/serializing-form-data-with-the-vanilla-js-formdata-object/
+    const serializeForm = function (form) {
+        var obj = {};
+        var formData = new FormData(form);
+        for (var key of formData.keys()) {
+            obj[key] = formData.get(key);
+        }
+        return obj;
+    };
+    
+
+    function formSubmit(event) {
+
+        console.log('EVENT:',event)
+
+        let elements = form.elements
+
+        console.log('ELEMENTS:',elements)
+
+
+        let formData = serializeForm(form)
+
+        console.log('FORM DATA:',formData)
+
+        let elem = doc.getElementById('Tela_no_bancos')
+        console.log('Elem Value:',elem.value)
+
+        event.preventDefault()
+
+    } 
+
+
+    function validateEmail(input) {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;    
+        return re.test(input.value.trim()) ? true : false
+    }
 
     function pag_Inicio_click() {
         console.log('Pg. Inicio')
@@ -301,6 +340,7 @@ let clickShowTela
 
     function incluirDados() {
         console.log('incluirDados')
+        form.submit();
     }
 
     function excluirDados() {
