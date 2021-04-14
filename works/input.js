@@ -46,6 +46,7 @@ let clickShowTela
     let pag_pages         = 0
     let pag_page          = 1
     let pag_size          = 12
+    let dataForm          = {}
 
 
     head_table.innerHTML  = ''
@@ -76,26 +77,35 @@ let clickShowTela
         }
         return obj;
     };
-    
+
+    async function enviaDadosPOST( dados ) {
+        console.log('DADOS:',dados)
+        await fetch( url_dados, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'}, 
+            body: JSON.stringify(dados)
+        })
+        .then(response => response.json())
+        .then(ret => {
+            
+            console.log('RESPONSE:',ret)
+        }).catch(err=>{
+            console.log('ERR:',err)
+        })
+
+    }
+
+    function preparaDADOS() {
+        dataForm = {}
+        fields.forEach(field=>{
+            let elem = doc.getElementById(`Tela_${field}`)
+            dataForm[field] = elem.value
+        })
+        console.log('DATAFORM:',dataForm)
+    }    
 
     function formSubmit(event) {
-
-        console.log('EVENT:',event)
-
-        let elements = form.elements
-
-        console.log('ELEMENTS:',elements)
-
-
-        let formData = serializeForm(form)
-
-        console.log('FORM DATA:',formData)
-
-        let elem = doc.getElementById('Tela_no_bancos')
-        console.log('Elem Value:',elem.value)
-
         event.preventDefault()
-
     } 
 
 
@@ -311,6 +321,8 @@ let clickShowTela
                     (acao === 'Alteração') ? alterarDados :
                     (acao === 'Exclusão' ) ? excluirDados : ()=>{ console.log('OK do modal:',acao) }
 
+        preparaDADOS()
+
         modal_confirmacao_show('Confirmação:',`Confirma realizar a ${acao} ?`, fn_acao  )
     }
 
@@ -340,7 +352,7 @@ let clickShowTela
 
     function incluirDados() {
         console.log('incluirDados')
-        form.submit();
+        enviaDadosPOST(dataForm)
     }
 
     function excluirDados() {
