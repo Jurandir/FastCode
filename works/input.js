@@ -95,11 +95,34 @@ let clickShowTela
 
     }
 
+    function ajustaValor(str,tipo) {
+        let ret 
+        let tp_int  = (`${tipo}`.substr(0,3) ==='int')
+        let tp_num  = (`${tipo}`.substr(0,4) ==='nume' || `${tipo}`.substr(0,4) ==='numb')
+        let tp_date = (`${tipo}`.substr(0,4) ==='time' || `${tipo}`.substr(0,4)==='date' )
+        
+        console.log('PreparaDADOS:',`(${str}) ==> ${tipo}`)
+
+        if(tp_int) {
+            ret = parseInt(str)
+        } else 
+        if(tp_date) {
+            ret = new Date(str).toISOString()
+        } else
+        if(tp_num) {
+            ret = parseFloat(str)
+        } else {
+            ret = str
+        }
+        return ret
+    }
+
     function preparaDADOS() {
         dataForm = {}
-        fields.forEach(field=>{
+        fields.forEach((field,idx)=>{
             let elem = doc.getElementById(`Tela_${field}`)
-            dataForm[field] = elem.value
+            let tipo = fieldsTypes[idx]
+            dataForm[field] = ajustaValor( elem.value, tipo )
         })
         console.log('DATAFORM:',dataForm)
     }    
