@@ -6,9 +6,15 @@ let clickShowTela
     let title_tela         = doc.getElementById("title_tela")
     let form               = doc.getElementById("form")
     let title_pesquisa     = doc.getElementById("title_pesquisa")
+    
     let modalConfirmaTitle = doc.getElementById("modalConfirmaTitle")
     let modalConfirmaBody  = doc.getElementById("modalConfirmaBody")
     let btnModalConfirma   = doc.getElementById("btnModalConfirma")
+
+    let modalMensagemTitle = doc.getElementById("modalMensagemTitle")
+    let modalMensagemBody  = doc.getElementById("modalMensagemBody")
+    let btnModalMensagem   = doc.getElementById("btnModalMensagem")
+
     let mySidenav          = doc.getElementById("mySidenav")
     let div_master         = doc.getElementById("div_master")
     let div_tabela         = doc.getElementById("div_tabela") 
@@ -41,6 +47,7 @@ let clickShowTela
     let url_list          = '/api/list'
     let flag_debug        = false
     let fn_modalConfirma  = null
+    let fn_modalMensagem  = null
     let id_tela           = -1
     let pag_rows          = 0
     let pag_pages         = 0
@@ -60,6 +67,7 @@ let clickShowTela
     btn_save.addEventListener("click", btn_save_exec )
 
     btnModalConfirma.addEventListener("click" , btn_confirma_exec )
+    btnModalMensagem.addEventListener("click" , btn_mensagem_exec )
     btn_tela_cancel.addEventListener("click"  , btn_cancel_exec )
     paginate_Inicio.addEventListener("click"  , pag_Inicio_click )
     paginate_Anterior.addEventListener("click", pag_Anterior_click )
@@ -87,10 +95,21 @@ let clickShowTela
         })
         .then(response => response.json())
         .then(ret => {
+            modal_message_hide()
+            modal_confirma_hide()
+
+            console.log('(enviaDadosPOST) RESPONSE:',ret)
+
+            if(ret.success){
+                modal_message_show('Suceso', ret.message + '<br/>' + ret.id, 'SUCESSO' )
+                // tela_consulta_mostar
+            } else {
+                modal_message_show('Erro', ret.message + '<br/>' + ret.err , 'ERRO' )
+            }
             
-            console.log('RESPONSE:',ret)
         }).catch(err=>{
             console.log('ERR:',err)
+            modal_message_show('Erro', ret.err , 'ERRO' )
         })
 
     }
@@ -365,6 +384,25 @@ let clickShowTela
         }
     }
 
+    // btn_mensagem_exec
+    function btn_mensagem_exec() {
+        if(fn_modalMensagem) {
+            fn_modalMensagem()
+        } else {
+            console.error(`(btn_confirma_exec) - função não atribuida a "fn_modalConfirma" !!!`)
+        }
+    }
+
+    // Modal Confirma Close
+    function modal_confirma_hide() {
+        $('#modalConfirma').modal('hide')
+    }
+
+    // Modal Mensagem Close
+    function modal_message_hide() {
+        $('#modalMensagem').modal('hide')
+    }
+    
     // Modal Confirmação
     function modal_confirmacao_show(title, message, fn_confirma ) {
         modalConfirmaTitle.innerHTML = title
@@ -373,6 +411,15 @@ let clickShowTela
         $('#modalConfirma').modal('show') // jQuery chama MODAL
     }
 
+    // Modal Mensagem
+    function modal_message_show(title, message, tipo ) {
+        modalMensagemTitle.innerHTML = title
+        modalMensagemBody.innerHTML = message 
+        fn_modalMensagem = (()=>{ $('#modalMensagem').modal('hide') }) 
+        $('#modalMensagem').modal('show') // jQuery chama MODAL
+        console.log('MODAL MESSAGE:',title,message,tipo)
+    }
+    
     function incluirDados() {
         console.log('incluirDados')
         enviaDadosPOST(dataForm)

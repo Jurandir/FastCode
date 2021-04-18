@@ -6,7 +6,7 @@
     const TABLE_TITLE = 'Cadastro de BANCOS (TESTE)'
     const TABLE_ID    = 'id'
     const TABLE_SEQ   = ''
-    const AUTO_ID     = false
+    const AUTO_ID     = true
     const DEBUG       = true
     
     const Bancos2 = methods({
