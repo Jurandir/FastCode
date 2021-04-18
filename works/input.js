@@ -42,6 +42,7 @@ let clickShowTela
     let fieldsReadOnly    = []
     let data_api          = []
     let field_ID          = 'id'
+    let value_ID          = 0
     let url_types         = ''
     let url_dados         = ''
     let url_list          = '/api/list'
@@ -101,13 +102,19 @@ let clickShowTela
             console.log('(enviaDadosPOST) RESPONSE:',ret)
 
             if(ret.success){
-                modal_message_show('Suceso', ret.message + '<br/>' + ret.id, 'SUCESSO' )
-                // tela_consulta_mostar
+                // Sucesso inclusão
+                let func = function(){
+                    actionsMostrarExec(ret.id,0)
+                }
+                modal_message_show('Suceso', ret.message + '<br/>' + ret.id, 'SUCESSO',func )
+                getDadosID( ret.id )
             } else {
+                // sem sucesso na inclusão
                 modal_message_show('Erro', ret.message + '<br/>' + ret.err , 'ERRO' )
             }
             
         }).catch(err=>{
+            // erro na inclusão
             console.log('ERR:',err)
             modal_message_show('Erro', ret.err , 'ERRO' )
         })
@@ -412,10 +419,10 @@ let clickShowTela
     }
 
     // Modal Mensagem
-    function modal_message_show(title, message, tipo ) {
+    function modal_message_show(title, message, tipo ,fn_mensagem) {
         modalMensagemTitle.innerHTML = title
-        modalMensagemBody.innerHTML = message 
-        fn_modalMensagem = (()=>{ $('#modalMensagem').modal('hide') }) 
+        modalMensagemBody.innerHTML = message
+        fn_modalMensagem = typeof(fn_mensagem)=='function' ? (()=>{ $('#modalMensagem').modal('hide'); fn_mensagem(); }) :(()=>{ $('#modalMensagem').modal('hide') })  
         $('#modalMensagem').modal('show') // jQuery chama MODAL
         console.log('MODAL MESSAGE:',title,message,tipo)
     }
@@ -747,9 +754,22 @@ let clickShowTela
         })
         .catch(err => console.log('Err:',err.message))    
      }
-     
-    function getDadosEntidades() {
-        let url_page = `${url_dados}/page?page=${pag_page}&size=${pag_size}`
+
+
+    function getDadosEntidades(){
+        let url  = `${url_dados}/page?page=${pag_page}&size=${pag_size}`
+        value_ID = -1
+        getDadosURL(url)
+    }
+
+    function getDadosID(id){
+        value_ID = id
+        let url = `${url_dados}/${id}`
+        getDadosURL(url)
+    }
+
+    function getDadosURL(url) {
+        let url_page = url
         fetch(url_page, { method: 'GET' })
         .then(response => response.json())
         .then(ret => { 
