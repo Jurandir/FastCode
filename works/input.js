@@ -5,16 +5,13 @@ let clickShowTela
 ((win,doc)=>{
     let title_tela         = doc.getElementById("title_tela")
     let form               = doc.getElementById("form")
-    let title_pesquisa     = doc.getElementById("title_pesquisa")
-    
+    let title_pesquisa     = doc.getElementById("title_pesquisa") 
     let modalConfirmaTitle = doc.getElementById("modalConfirmaTitle")
     let modalConfirmaBody  = doc.getElementById("modalConfirmaBody")
     let btnModalConfirma   = doc.getElementById("btnModalConfirma")
-
     let modalMensagemTitle = doc.getElementById("modalMensagemTitle")
     let modalMensagemBody  = doc.getElementById("modalMensagemBody")
     let btnModalMensagem   = doc.getElementById("btnModalMensagem")
-
     let mySidenav          = doc.getElementById("mySidenav")
     let div_master         = doc.getElementById("div_master")
     let div_tabela         = doc.getElementById("div_tabela") 
@@ -56,7 +53,6 @@ let clickShowTela
     let pag_size          = 12
     let dataForm          = {}
 
-
     head_table.innerHTML  = ''
     body_table.innerHTML  = ''
 
@@ -87,6 +83,44 @@ let clickShowTela
         return obj;
     };
 
+    // Envia dados para API PUT
+    async function enviaDadosPUT( dados ) {
+        let { id } = dados
+        let url = `${url_dados}/${id}`
+        console.log('DADOS:',url,dados)
+        await fetch( url, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'}, 
+            body: JSON.stringify(dados)
+        })
+        .then(response => response.json())
+        .then(ret => {
+            modal_message_hide()
+            modal_confirma_hide()
+
+            console.log('(enviaDadosPUT) RESPONSE:',ret)
+
+            if(ret.success){
+                // Sucesso Alteração
+                let func = function(){
+                    actionsMostrarExec(id,0)
+                }
+                modal_message_show('Sucesso', ret.message + '<br/>' + id, 'SUCESSO',func )
+                getDadosID( id )
+            } else {
+                // sem sucesso na alteração
+                modal_message_show('Erro', ret.message + '<br/>' + err , 'ERRO' )
+            }
+            
+        }).catch(err=>{
+            // erro na alteração
+            console.log('ERR:',err)
+            modal_message_show('Erro', err.message , 'ERRO' )
+        })
+
+    }
+
+    // Envia dados para API POST
     async function enviaDadosPOST( dados ) {
         console.log('DADOS:',dados)
         await fetch( url_dados, {
@@ -106,7 +140,7 @@ let clickShowTela
                 let func = function(){
                     actionsMostrarExec(ret.id,0)
                 }
-                modal_message_show('Suceso', ret.message + '<br/>' + ret.id, 'SUCESSO',func )
+                modal_message_show('Sucesso', ret.message + '<br/>' + ret.id, 'SUCESSO',func )
                 getDadosID( ret.id )
             } else {
                 // sem sucesso na inclusão
@@ -116,7 +150,7 @@ let clickShowTela
         }).catch(err=>{
             // erro na inclusão
             console.log('ERR:',err)
-            modal_message_show('Erro', ret.err , 'ERRO' )
+            modal_message_show('Erro', err.message , 'ERRO' )
         })
 
     }
@@ -351,6 +385,13 @@ let clickShowTela
         text_acao_tela('Pesquisa') 
     }
 
+    // btn_ok_mostrar
+    function btn_ok_mostrar() {
+        if(flag_debug) { console.log('Clicou OK Mostar') }
+        show_div( div_tabela )  
+        text_acao_tela('Pesquisa') 
+    }
+
     // btn_sair
     function btn_sair_exec() {
         if(flag_debug) { console.log('Clicou SAIR') }   
@@ -368,7 +409,8 @@ let clickShowTela
 
         fn_acao =   (acao === 'Inclusão' ) ? incluirDados :
                     (acao === 'Alteração') ? alterarDados :
-                    (acao === 'Exclusão' ) ? excluirDados : ()=>{ console.log('OK do modal:',acao) }
+                    (acao === 'Exclusão' ) ? excluirDados : 
+                    (acao === 'Cadastro')  ? mostrarDados : ()=>{ console.log('OK do modal:',acao) }
 
         preparaDADOS()
 
@@ -426,18 +468,28 @@ let clickShowTela
         $('#modalMensagem').modal('show') // jQuery chama MODAL
         console.log('MODAL MESSAGE:',title,message,tipo)
     }
-    
+        
+    // Função Incluir Dados
     function incluirDados() {
         console.log('incluirDados')
         enviaDadosPOST(dataForm)
     }
 
+    // Função Excluir Dados
     function excluirDados() {
         console.log('excluirDados')
     }
 
+    // Função Mostrar Dados
+    function mostrarDados() {
+        console.log('mostrarDados')
+        btn_ok_mostrar()
+    }
+
+    // Funcão Altera dados
     function alterarDados() {
         console.log('alterarDados')
+        enviaDadosPUT(dataForm)
     }
 
     function append(element,tag, str) {
